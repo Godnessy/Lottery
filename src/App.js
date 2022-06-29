@@ -18,9 +18,9 @@ import { FaEdit, FaTrash } from "react-icons/fa";
 
 /*
 Todo:
-1. Make a DB and connect it to the app
-2. save people and tickets array to DB
-3. fetch data from DB on the next page
+1. Make a DB and connect it to the app - used firebase  
+2. save people and tickets array to DB - done
+3. fetch data from DB on the next page -
 4. !! make an env file to store the firebase config
 */
 
@@ -56,6 +56,7 @@ function App() {
       );
     };
     return () => {
+      console.log("call made");
       getUsers();
     };
   }, [lastNumber]);
@@ -63,6 +64,7 @@ function App() {
   //how to update:
 
   const updatePlayer = async (id, tickets) => {
+    const playerDoc = doc(db, "players", id);
     await updateDoc(namesCollectionRef, id, newTickets);
   };
 
@@ -71,8 +73,8 @@ function App() {
     await deleteDoc(playerDoc);
     const remainingPlayers = testList.filter((player) => player.id !== id);
     setTestList(remainingPlayers);
-    console.log(remainingPlayers);
-    if (testList.length - 1 === 0) {
+    console.log(remainingPlayers.length);
+    if (remainingPlayers.length == 0) {
       setLastNumber(0);
     }
   };
