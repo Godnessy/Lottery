@@ -25,11 +25,21 @@ code {
     monospace;
 }
 
+.setup-container {
+  display: grid;
+  grid-template-columns: 5fr 1fr;
+}
+
 .logo {
   margin: 10px;
+  width: 25em;
 }
 
 /* button */
+.btn-container {
+  display: flex;
+  justify-content: space-between;
+}
 .btn {
   box-shadow: inset 0px 1px 0px 0px #bbdaf7;
   background: linear-gradient(to bottom, #79bbff 5%, #378de5 100%);
@@ -40,7 +50,7 @@ code {
   cursor: pointer;
   color: #ffffff;
   font-family: Courier New;
-  font-size: 1.2em;
+  font-size: 1.5em;
   font-weight: bold;
   font-style: italic;
   padding: 6px 24px;
@@ -56,6 +66,42 @@ code {
   top: 1px;
 }
 
+#btn-addPlayer {
+  position: relative;
+  left: 3em;
+}
+
+.btn-reset {
+  box-shadow: inset 0px 1px 0px 0px #f29c93;
+  background: linear-gradient(to bottom, #fe1a00 5%, #ce0100 100%);
+  background-color: #fe1a00;
+  border-radius: 6px;
+  border: 1px solid #d83526;
+  display: inline-block;
+  cursor: pointer;
+  color: #ffffff;
+  font-family: Arial;
+  font-size: 1.5em;
+  font-weight: bold;
+  text-decoration: none;
+  text-shadow: 0px 1px 0px #b23e35;
+  position: relative;
+  left: 15em;
+}
+
+.btn-reset:hover {
+  background: linear-gradient(to bottom, #ce0100 5%, #fe1a00 100%);
+  background-color: #ce0100;
+}
+.btn-reset:active {
+  position: relative;
+  top: 1px;
+}
+
+.btn-prize {
+  font-size: 1em;
+}
+
 .title {
   font-size: 3rem;
   font-weight: bold;
@@ -65,7 +111,7 @@ code {
   font-family: "Lora", serif;
   text-align: center;
   margin-bottom: 1rem;
-  margin-right: 6rem;
+  margin-right: 13em;
 }
 /* form */
 .form {
@@ -75,11 +121,23 @@ code {
   align-items: center;
   justify-content: center;
   width: 50%;
-  height: 90%;
+  height: 40%;
   background: #fff;
   padding: 2rem;
   border-radius: 0.5rem;
   box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.2);
+}
+
+.prize-form {
+  position: relative;
+  right: 2em;
+}
+
+.prize-input {
+  font-size: 1.2em;
+  width: 90%;
+  margin: 1rem;
+  font-weight: bold;
 }
 
 /* Name and number input  */
@@ -101,12 +159,12 @@ code {
 }
 
 .name {
-  margin-left: 7em;
+  margin-left: 15.4em;
 }
 
 .info {
   text-decoration: underline;
-  font-size: 1.3em;
+  font-size: 1.6em;
   font-weight: bold;
 }
 
@@ -174,6 +232,34 @@ code {
   font-size: 1.2rem;
   margin: 0 0.15rem;
   transition: var(--transition);
+}
+/* Prize */
+.prize-container {
+  position: relative;
+  right: 10em;
+}
+.prize-form {
+  margin-right: 9em;
+}
+.prize-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  /* background: #fff; */
+  padding: 0 1rem 0.5rem 2.5rem;
+  border-radius: 0.5rem;
+}
+.prize-title {
+  font-size: 3rem;
+  font-weight: bold;
+  color: #333;
+  text-decoration: underline;
+  font-weight: bold;
+  font-family: "Lora", serif;
+  text-align: center;
+  margin-right: 4rem;
 }
 
 @media (max-width: 768px) {

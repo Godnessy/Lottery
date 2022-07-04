@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
 import "./App.css";
 import React from "react";
 import logo from "./images/mtt_logo.png";
@@ -9,12 +8,12 @@ import {
   getDocs,
   addDoc,
   orderBy,
-  updateDoc,
   query,
   deleteDoc,
   doc,
 } from "firebase/firestore";
-import { FaEdit, FaTrash } from "react-icons/fa";
+import List from "./Components/List";
+import Prizes from "./Components/Prizes";
 
 /*
 Todo:
@@ -61,17 +60,30 @@ function App() {
     };
   }, [lastNumber]);
 
+  useEffect(() => {}, [name, tickets]);
+
   //how to update:
 
-  const updatePlayer = async (id, tickets) => {
+  const editPlayer = async (id, tickets) => {
     const playerDoc = doc(db, "players", id);
-    await updateDoc(namesCollectionRef, id, newTickets);
+    const playerToEdit = testList.filter((player) => player.id === id);
+    setName(playerToEdit[0].name);
+    setTickets(playerToEdit[0].tickets.length);
   };
 
-  const deleteName = async (id) => {
+  const resetList = async (list) => {
+    list.map((player) => {
+      const { id } = player;
+      const playerDoc = doc(db, "players", id);
+      deleteDoc(playerDoc);
+      setLastNumber(0);
+    });
+  };
+
+  const deletePlayer = async (id) => {
     const playerDoc = doc(db, "players", id);
-    await deleteDoc(playerDoc);
     const remainingPlayers = testList.filter((player) => player.id !== id);
+    await deleteDoc(playerDoc);
     setTestList(remainingPlayers);
     console.log(remainingPlayers.length);
     if (remainingPlayers.length == 0) {
@@ -82,6 +94,7 @@ function App() {
   const addNewTickets = (val) => {
     if (isNaN(val)) {
       alert("Please enter a number");
+      setTickets(0);
       return;
     } else {
       const newArr = Array.from(new Array(val), (x, i) => i + lastNumber + 1);
@@ -90,90 +103,79 @@ function App() {
     }
   };
 
-  const addNewPerson = (e) => {
-    e.preventDefault();
-    setList({ ...list, [name]: newTickets });
-    setLastNumber(Number(newTickets.slice(-1)));
-    setName("");
-    setTickets("");
-  };
-
   return (
     <main>
       <img src={logo} alt="" className="logo" />
       <h1 className="title">MTT Fredags Lotteri</h1>
-      <form
-        className="form"
-        onSubmit={(e) => {
-          createNewName(e);
-        }}
-      >
-        <p className="info">
-          Skriv navn på personen som vil kjøpe billeter og hvor mange billeter
-          de vil ha
-        </p>
-        <div className="nameCell">
-          <div>
-            <label className="labels">Navn</label>
-            <input
-              type="text"
-              className="newName name"
-              value={name}
-              required
-              onChange={(e) => {
-                setName(e.target.value);
-              }}
-            />
-          </div>
-          <div>
-            <label className="labels">hvor mange?</label>
-            <input
-              value={tickets}
-              className="newName"
-              required
-              onChange={(e) => {
-                addNewTickets(Number(e.target.value));
-                setTickets(e.target.value);
-              }}
-            />
-          </div>
-        </div>
-        <button className="btn" type="submit">
-          Legg til
-        </button>
-      </form>
 
-      <div className="list">
-        <div className="titles-container">
-          <h2 className="list-name">Navn</h2>
-          <h2 className="list-numbers">Billet Nummere</h2>
+      <div className="setup-container">
+        <div className="setup-box">
+          <form
+            className="form"
+            onSubmit={(e) => {
+              createNewName(e);
+            }}
+          >
+            <p className="info">
+              Skriv navn på personen som vil kjøpe billeter og hvor mangen
+              billeter de vil ha
+            </p>
+            <div className="nameCell">
+              <div>
+                <label className="labels">Navn</label>
+                <input
+                  type="text"
+                  className="newName name"
+                  value={name}
+                  required
+                  onChange={(e) => {
+                    setName(e.target.value);
+                  }}
+                />
+              </div>
+              <div>
+                <label className="labels">Hvor mange billetter?</label>
+                <input
+                  value={tickets}
+                  className="newName"
+                  required
+                  onChange={(e) => {
+                    addNewTickets(Number(e.target.value));
+                    setTickets(e.target.value);
+                  }}
+                />
+              </div>
+            </div>
+            <div className="btn-container">
+              <button className="btn" id="btn-addPlayer" type="submit">
+                Legg til
+              </button>
+              <button
+                className="btn btn-reset"
+                type="button"
+                onClick={() => resetList(testList)}
+              >
+                Reset
+              </button>
+            </div>
+          </form>
+
+          <div className="list">
+            <div className="titles-container">
+              <h2 className="list-name">Navn</h2>
+              <h2 className="list-numbers">Billet Nummere</h2>
+            </div>
+            <div>
+              <List
+                testList={testList}
+                editPlayer={editPlayer}
+                deletePlayer={deletePlayer}
+              />
+            </div>
+          </div>
         </div>
-        <div className="list-items">
-          {testList.length > 0 &&
-            testList.map((member) => {
-              const { tickets, name, id } = member;
-              return (
-                <div key={id} className="list-item">
-                  <p className="names">{`${name}`}</p>
-                  <p className="numbers">{`${tickets[0]} - ${tickets.slice(
-                    -1
-                  )}`}</p>
-                  <div className="icons">
-                    <button className="edit-btn">
-                      <FaEdit className="edit" />
-                    </button>
-                    <button className="delete-btn">
-                      <FaTrash
-                        className="delete"
-                        onClick={() => {
-                          deleteName(id);
-                        }}
-                      />
-                    </button>
-                  </div>
-                </div>
-              );
-            })}
+        <div className="prize-container">
+          <Prizes></Prizes>
         </div>
       </div>
     </main>
