@@ -27,7 +27,7 @@ code {
 
 .setup-container {
   display: grid;
-  grid-template-columns: 5fr 1fr;
+  grid-template-columns: 4fr 1fr;
 }
 
 .logo {
@@ -68,25 +68,33 @@ code {
 
 #btn-addPlayer {
   position: relative;
-  left: 3em;
+  left: 150%;
 }
 
 .btn-reset {
-  box-shadow: inset 0px 1px 0px 0px #f29c93;
-  background: linear-gradient(to bottom, #fe1a00 5%, #ce0100 100%);
-  background-color: #fe1a00;
-  border-radius: 6px;
-  border: 1px solid #d83526;
-  display: inline-block;
-  cursor: pointer;
-  color: #ffffff;
-  font-family: Arial;
-  font-size: 1.5em;
-  font-weight: bold;
-  text-decoration: none;
-  text-shadow: 0px 1px 0px #b23e35;
   position: relative;
-  left: 15em;
+  right: 168%;
+  appearance: auto;
+  writing-mode: horizontal-tb !important;
+  text-rendering: auto;
+  color: grey;
+  letter-spacing: normal;
+  word-spacing: normal;
+  line-height: normal;
+  text-transform: none;
+  text-indent: 0px;
+  text-shadow: none;
+  display: inline-block;
+  text-align: center;
+  align-items: flex-start;
+  cursor: default;
+  box-sizing: border-box;
+  border-width: 2px;
+  border-style: outset;
+  border-image: initial;
+  border: none;
+  background: none;
+  text-decoration: underline;
 }
 
 .btn-reset:hover {
@@ -111,7 +119,7 @@ code {
   font-family: "Lora", serif;
   text-align: center;
   margin-bottom: 1rem;
-  margin-right: 13em;
+  margin-right: 10em;
 }
 /* form */
 .form {
@@ -121,16 +129,24 @@ code {
   align-items: center;
   justify-content: center;
   width: 50%;
-  height: 40%;
+  height: 35%;
   background: #fff;
   padding: 2rem;
   border-radius: 0.5rem;
   box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.2);
 }
+.info {
+  text-decoration: underline;
+  font-size: 1.6em;
+  font-weight: bold;
+  margin: 1rem 5em 2rem 3.5em;
+}
 
 .prize-form {
   position: relative;
   right: 2em;
+  margin-top: 1em;
+  width: 130%;
 }
 
 .prize-input {
@@ -138,6 +154,9 @@ code {
   width: 90%;
   margin: 1rem;
   font-weight: bold;
+}
+.nameCell {
+  margin-right: 14%;
 }
 
 /* Name and number input  */
@@ -148,24 +167,18 @@ code {
   padding: 0.5rem;
   font-size: 1rem;
   font-weight: bold;
-  color: #333;
+  color: #333;;
 }
 
 .labels {
-  font-size: 2rem;
+  font-size: 1.5rem;
   font-weight: bold;
   margin-right: 0.5rem;
   color: #333;
 }
 
 .name {
-  margin-left: 15.4em;
-}
-
-.info {
-  text-decoration: underline;
-  font-size: 1.6em;
-  font-weight: bold;
+  margin-left: 8.7em;
 }
 
 /* List */
@@ -237,17 +250,23 @@ code {
 .prize-container {
   position: relative;
   right: 10em;
+  width: 70%;
+  height: auto;
+}
+.prize-pic {
+  width: 100%;
 }
 .prize-form {
-  margin-right: 9em;
+  margin-right: 3em;
+  width: 90%;
+  margin-bottom: 1rem;
 }
-.prize-list {
+.prize-list-input {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   width: 100%;
-  /* background: #fff; */
   padding: 0 1rem 0.5rem 2.5rem;
   border-radius: 0.5rem;
 }
@@ -259,12 +278,98 @@ code {
   font-weight: bold;
   font-family: "Lora", serif;
   text-align: center;
-  margin-right: 4rem;
+}
+.prize-list-container {
+  display: grid;
+  grid-template-columns: 1fr;
+  background-color: #fffaf1;
+  margin-right: 3em;
+  width: 20em;
+  border-radius: 0.5rem;
+}
+
+.prize-list{
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content:space-between;
+
+
+}
+.prize-item {
+  display: flex;
+}
+
+.prize-icons {
+  position: relative;
+  top: 1.5rem;
+  left: 1rem;
+}
+
+
+@media (max-width: 1441px) {
+  .main-form{
+    height: 15em;
+  }
+.info{
+  font-size: 1.3em;
+}
+ 
+
+  .name{
+  position: relative;
+  left: 2.5em;
+  }
+
+  .nameLabel{
+  position: relative;
+  
+  top:1em;
+  }
+
+  .btn-container{
+    justify-content: space-between;
+    width: 11em;
+  }
+
+  #btn-addPlayer {
+    font-size: 1em;
+    position: relative;
+    left: 15em;
+  }
+  .list-items{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 50%;
+  }
+  .prize-pic{
+    position: relative;
+    left:0.9em;
+  }
+  .prize-form{
+    width: 90%;
+    margin-bottom: 1rem;
+  }
+
+ 
+}
+@media (max-width: 1025px) {
+
+  #btn-addPlayer {
+    position: relative;
+    right: 150em;
+  }
+ 
 }
 
 @media (max-width: 768px) {
   .name {
     margin-left: 1.7rem;
+  }
+
+  .newTickets{
+    background-color: red;
   }
   .names {
     margin-left: -3.5em;

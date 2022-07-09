@@ -64,7 +64,7 @@ function App() {
 
   //how to update:
 
-  const editPlayer = async (id, tickets) => {
+  const editPlayer = async (id) => {
     const playerDoc = doc(db, "players", id);
     const playerToEdit = testList.filter((player) => player.id === id);
     setName(playerToEdit[0].name);
@@ -111,18 +111,17 @@ function App() {
       <div className="setup-container">
         <div className="setup-box">
           <form
-            className="form"
+            className="form main-form"
             onSubmit={(e) => {
               createNewName(e);
             }}
           >
             <p className="info">
-              Skriv navn på personen som vil kjøpe billeter og hvor mangen
-              billeter de vil ha
+              Skriv navnet på personen og hvor mange billetter de ønsker:
             </p>
             <div className="nameCell">
               <div>
-                <label className="labels">Navn</label>
+                <label className="labels nameLabel">Navn:</label>
                 <input
                   type="text"
                   className="newName name"
@@ -134,10 +133,10 @@ function App() {
                 />
               </div>
               <div>
-                <label className="labels">Hvor mange billetter?</label>
+                <label className="labels">Antall billetter:</label>
                 <input
                   value={tickets}
-                  className="newName"
+                  className="newName newTickets"
                   required
                   onChange={(e) => {
                     addNewTickets(Number(e.target.value));
@@ -151,7 +150,7 @@ function App() {
                 Legg til
               </button>
               <button
-                className="btn btn-reset"
+                className="btn-reset"
                 type="button"
                 onClick={() => resetList(testList)}
               >
