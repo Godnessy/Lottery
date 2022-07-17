@@ -9,29 +9,65 @@ import {
   orderBy,
   query,
   deleteDoc,
+  updateDoc,
+  getDoc,
   doc,
 } from "firebase/firestore";
 import { FaEdit, FaTrash } from "react-icons/fa";
 
 const Prizes = () => {
   const [prizeList, setPrizeList] = useState([]);
-  const [prizeNumber, setPrizeNumber] = useState(0);
+  const [prizeNumber, setPrizeNumber] = useState(1);
   const [newPrize, setNewPrize] = useState("");
   const [PrizesPic, setPrizesPic] = useState(rewards);
   const prizesCollectionRef = collection(db, "prizes");
 
-  useEffect(() => {
-    const getPrizes = async () => {
-      const data = query(prizesCollectionRef, orderBy("number", "asc"));
-      const dataSnapshot = await getDocs(data);
-      setPrizeList(
-        dataSnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
-      );
-    };
-    return () => {
+  
+  const updateLastPrizeNumber = async(number)=>{
+    const docRef = doc(db, "prizeNumber", "lastPrizeNumber");
+   const docSnap = await updateDoc(docRef,{
+    dbLastNumber : number}
+    )
+  }
+
+  const getPrizes = async () => {
+    const data = query(prizesCollectionRef, orderBy("number", "asc"));
+    const dataSnapshot = await getDocs(data);
+    setPrizeList(
+      dataSnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
+    );
+  };
+  
+
+  const getLastPrizeNumber = async () =>{
+    const docRef = doc(db, "prizeNumber", "lastPrizeNumber");
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) {
+      const {dbLastNumber} = docSnap.data()
+      setPrizeNumber(dbLastNumber)
+      console.log(`Current last prize number: ${dbLastNumber}`);
+    } else {
+      console.log("No such document!");
+    }
+  }
+
+
+  const deletePrize = async(id) =>{
+    const prizeRef = doc(db,"prizes",id);
+    const remainingPrizes = prizeList.filter(prize => prize.id !== id);
+    await deleteDoc(prizeRef);
+    setPrizeList(remainingPrizes);
+    if(remainingPrizes.length == 0){
+      setPrizeNumber(1);
+      updateLastPrizeNumber(1)
+    }
+  
+  }
+
+  useEffect(() => {  
       getPrizes();
+      getLastPrizeNumber();
       console.log("prize call made");
-    };
   }, [prizeNumber]);
 
   const addNewPrize = async (e) => {
@@ -40,13 +76,14 @@ const Prizes = () => {
       prizeName: newPrize,
       number: prizeNumber,
     });
-    setPrizeNumber(prizeNumber + 1);
+    setPrizeNumber(prizeNumber+1);
+    updateLastPrizeNumber(prizeNumber+1)
     setNewPrize("");
   };
 
   const editPrize = async (id, prizeName) => {
     const prizeDoc = doc(db, "prizes", id);
-    console.log(prizeDoc);
+    
   };
 
   return (
@@ -66,7 +103,6 @@ const Prizes = () => {
             className="input prize-input"
             onChange={(e) => {
               setNewPrize(e.target.value);
-              console.log(e.target.value);
             }}
           />
           <button className="btn btn-prize" type="submit">
@@ -93,7 +129,7 @@ const Prizes = () => {
                       />
                     </button>
                     <button className="delete-btn">
-                      <FaTrash className="delete" onClick={() => {}} />
+                      <FaTrash className="delete" onClick={() => {deletePrize(id)}} />
                     </button>
                   </div>
                 </div>

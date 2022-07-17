@@ -69,6 +69,7 @@ code {
 #btn-addPlayer {
   position: relative;
   left: 150%;
+  font-size: 1.5em;
 }
 
 .btn-reset {
@@ -135,6 +136,10 @@ code {
   border-radius: 0.5rem;
   box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.2);
 }
+
+.main-form{
+  height: 25%;
+}
 .info {
   text-decoration: underline;
   font-size: 1.6em;
@@ -156,7 +161,7 @@ code {
   font-weight: bold;
 }
 .nameCell {
-  margin-right: 14%;
+  margin-right: 21%;
 }
 
 /* Name and number input  */
@@ -178,7 +183,7 @@ code {
 }
 
 .name {
-  margin-left: 8.7em;
+  margin-left: 6.5em;
 }
 
 /* List */
@@ -309,7 +314,7 @@ code {
 
 @media (max-width: 1441px) {
   .main-form{
-    height: 15em;
+    height: 17em;
   }
 .info{
   font-size: 1.3em;
@@ -318,13 +323,15 @@ code {
 
   .name{
   position: relative;
-  left: 2.5em;
+  left: 4.5em;
   }
 
   .nameLabel{
   position: relative;
-  
   top:1em;
+  }
+  .newTickets{
+    font-size: 0.8em;
   }
 
   .btn-container{
@@ -336,6 +343,7 @@ code {
     font-size: 1em;
     position: relative;
     left: 15em;
+    
   }
   .list-items{
     display: flex;

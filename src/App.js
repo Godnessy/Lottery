@@ -11,27 +11,59 @@ import {
   query,
   deleteDoc,
   doc,
+  getDoc,
+  updateDoc,
 } from "firebase/firestore";
 import List from "./Components/List";
 import Prizes from "./Components/Prizes";
+import { getByTitle } from "@testing-library/react";
 
 /*
 Todo:
-1. Make a DB and connect it to the app - used firebase  
-2. save people and tickets array to DB - done
+1. make the prizes edit and delete buttons work including DB update
 3. fetch data from DB on the next page -
-4. !! make an env file to store the firebase config
+4. create the play page which will show: player list, prize list, roll button and winner area.
+5. !! make an env file to store the firebase config
 */
 
 function App() {
-  const [list, setList] = useState({});
   const [name, setName] = useState("");
   const [tickets, setTickets] = useState("");
   const [lastNumber, setLastNumber] = useState(0);
   const [newTickets, setnewTickets] = useState([]);
   const [testList, setTestList] = useState([]);
-  const namesCollectionRef = collection(db, "players");
   const [data, setData] = useState([]);
+  const namesCollectionRef = collection(db, "players");
+  const [tempLastNumber, setTempLastNumber] = useState(null);
+
+
+  const getUserList = async () => {
+      const data = query(namesCollectionRef, orderBy("time", "asc"));
+      const dataSnapshot = await getDocs(data);
+      setData(dataSnapshot);
+      setTestList(
+        dataSnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
+      );
+  }
+
+  const getLastTicketNumber = async () =>{
+      const docRef = doc(db, "playersNumber", "lastNumber");
+      const docSnap = await getDoc(docRef);
+      if (docSnap.exists()) {
+        const {lastNumber} = docSnap.data()
+        setLastNumber(lastNumber)
+      } else {
+        console.log("No such document!");
+      }
+    }
+
+
+  const updateLastNumber = async (number) =>{
+    const lastNumberRef = doc(db, "playersNumber", "lastNumber");
+    await updateDoc(lastNumberRef, {
+      lastNumber: number
+    });
+  }
 
   const createNewName = async (e) => {
     e.preventDefault();
@@ -40,33 +72,30 @@ function App() {
       tickets: newTickets,
       time: Date.now(),
     });
-    setLastNumber(Number(newTickets.slice(-1)));
+    const newLastNumber = Number(newTickets.slice(-1))
+    setLastNumber(newLastNumber);
+    updateLastNumber(newLastNumber)
     setName("");
     setTickets("");
   };
 
   useEffect(() => {
-    const getUsers = async () => {
-      const data = query(namesCollectionRef, orderBy("time", "asc"));
-      const dataSnapshot = await getDocs(data);
-      setData(dataSnapshot);
-      setTestList(
-        dataSnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
-      );
-    };
-    return () => {
-      console.log("call made");
-      getUsers();
-    };
+    getUserList()
+    getLastTicketNumber();
+    console.log('call made')
   }, [lastNumber]);
 
-  useEffect(() => {}, [name, tickets]);
-
-  //how to update:
 
   const editPlayer = async (id) => {
     const playerDoc = doc(db, "players", id);
     const playerToEdit = testList.filter((player) => player.id === id);
+    const remainingPlayers = testList.filter((player) => player.id !== id);
+    await deleteDoc(playerDoc);
+    setTestList(remainingPlayers);
+    if (remainingPlayers.length == 0) {
+      setLastNumber(0);
+      updateLastNumber(0)
+    }
     setName(playerToEdit[0].name);
     setTickets(playerToEdit[0].tickets.length);
   };
@@ -85,9 +114,9 @@ function App() {
     const remainingPlayers = testList.filter((player) => player.id !== id);
     await deleteDoc(playerDoc);
     setTestList(remainingPlayers);
-    console.log(remainingPlayers.length);
     if (remainingPlayers.length == 0) {
       setLastNumber(0);
+      updateLastNumber(0)
     }
   };
 
@@ -117,7 +146,7 @@ function App() {
             }}
           >
             <p className="info">
-              Skriv navnet på personen og hvor mange billetter de ønsker:
+              Skriv navnet på deltakeren og hvor mange billetter de ønsker:
             </p>
             <div className="nameCell">
               <div>
