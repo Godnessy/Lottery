@@ -16,11 +16,12 @@ import {
 } from "firebase/firestore";
 import List from "./Components/List";
 import Prizes from "./Components/Prizes";
-import { getByTitle } from "@testing-library/react";
 
 /*
 Todo:
-1. make the prizes edit and delete buttons work including DB update
+- Change the way the submit proccess works - Take away the automatic array forming from the tickets variable and add a function that will do that only when the submit button is pressed and not before.
+1. make the prizes edit and delete buttons update the DB last number
+2. Instead of making an array of each player with all the numbers, make an array with start and finish numbers and check if the winning number is between these numbers.
 3. fetch data from DB on the next page -
 4. create the play page which will show: player list, prize list, roll button and winner area.
 5. !! make an env file to store the firebase config
@@ -29,12 +30,11 @@ Todo:
 function App() {
   const [name, setName] = useState("");
   const [tickets, setTickets] = useState("");
-  const [lastNumber, setLastNumber] = useState(0);
-  const [newTickets, setnewTickets] = useState([]);
   const [testList, setTestList] = useState([]);
   const [data, setData] = useState([]);
+  const [updateList,setUpdateList] = useState(false)
   const namesCollectionRef = collection(db, "players");
-  const [tempLastNumber, setTempLastNumber] = useState(null);
+ 
 
 
   const getUserList = async () => {
@@ -46,44 +46,55 @@ function App() {
       );
   }
 
-  const getLastTicketNumber = async () =>{
+  const getLastNumberFromDB = async () =>{
       const docRef = doc(db, "playersNumber", "lastNumber");
       const docSnap = await getDoc(docRef);
       if (docSnap.exists()) {
-        const {lastNumber} = docSnap.data()
-        setLastNumber(lastNumber)
-      } else {
-        console.log("No such document!");
-      }
+        console.log(docSnap.data().lastNumber);
+        return docSnap.data().lastNumber
     }
+    return 0
+  }
 
 
-  const updateLastNumber = async (number) =>{
+  const setLastNumberDB = async (number) =>{
     const lastNumberRef = doc(db, "playersNumber", "lastNumber");
     await updateDoc(lastNumberRef, {
       lastNumber: number
     });
   }
 
-  const createNewName = async (e) => {
-    e.preventDefault();
+  const registerNewPlayer = async(name,playerFirstNumber,playerLastNumber)=>{
     await addDoc(namesCollectionRef, {
       name,
-      tickets: newTickets,
+      firstTicket: playerFirstNumber,
+      lastTicket: playerLastNumber,
       time: Date.now(),
     });
-    const newLastNumber = Number(newTickets.slice(-1))
-    setLastNumber(newLastNumber);
-    updateLastNumber(newLastNumber)
+    return true
+  }
+
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    if (tickets === 0 ){
+      alert(`Kan ikke kjøpe 0 billeter`)
+      return
+    }
+    const dbOldLastNumber =  await getLastNumberFromDB();
+    const playerFirstNumber = (dbOldLastNumber+1);
+    const playerLastNumber = (playerFirstNumber + tickets)
+    registerNewPlayer(name,playerFirstNumber,playerLastNumber)
+    await setLastNumberDB(playerLastNumber)
+    setUpdateList(!updateList)
     setName("");
     setTickets("");
   };
 
   useEffect(() => {
     getUserList()
-    getLastTicketNumber();
     console.log('call made')
-  }, [lastNumber]);
+    console.log(`test list is: ${testList.length}`);
+  }, [updateList]);
 
 
   const editPlayer = async (id) => {
@@ -93,8 +104,7 @@ function App() {
     await deleteDoc(playerDoc);
     setTestList(remainingPlayers);
     if (remainingPlayers.length == 0) {
-      setLastNumber(0);
-      updateLastNumber(0)
+     await setLastNumberDB(0)
     }
     setName(playerToEdit[0].name);
     setTickets(playerToEdit[0].tickets.length);
@@ -105,32 +115,25 @@ function App() {
       const { id } = player;
       const playerDoc = doc(db, "players", id);
       deleteDoc(playerDoc);
-      setLastNumber(0);
+      return setLastNumberDB(0)
     });
+    
   };
 
   const deletePlayer = async (id) => {
+    console.log('started delete player action');
     const playerDoc = doc(db, "players", id);
     const remainingPlayers = testList.filter((player) => player.id !== id);
     await deleteDoc(playerDoc);
     setTestList(remainingPlayers);
     if (remainingPlayers.length == 0) {
-      setLastNumber(0);
-      updateLastNumber(0)
+      await setLastNumberDB(0)
     }
+    console.log(remainingPlayers.length);
+    console.log('ended delete player action');
   };
 
-  const addNewTickets = (val) => {
-    if (isNaN(val)) {
-      alert("Please enter a number");
-      setTickets(0);
-      return;
-    } else {
-      const newArr = Array.from(new Array(val), (x, i) => i + lastNumber + 1);
-      setnewTickets(newArr);
-      setLastNumber(lastNumber + 1);
-    }
-  };
+
 
   return (
     <main>
@@ -142,7 +145,7 @@ function App() {
           <form
             className="form main-form"
             onSubmit={(e) => {
-              createNewName(e);
+              onSubmit(e);
             }}
           >
             <p className="info">
@@ -168,8 +171,7 @@ function App() {
                   className="newName newTickets"
                   required
                   onChange={(e) => {
-                    addNewTickets(Number(e.target.value));
-                    setTickets(e.target.value);
+                    setTickets(Number(e.target.value));
                   }}
                 />
               </div>
@@ -193,7 +195,7 @@ function App() {
               <h2 className="list-name">Navn</h2>
               <h2 className="list-numbers">Billet Nummere</h2>
             </div>
-            <div>
+            <div className="list-items-container">
               <List
                 testList={testList}
                 editPlayer={editPlayer}
