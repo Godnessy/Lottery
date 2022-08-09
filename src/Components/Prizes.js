@@ -17,7 +17,6 @@ import { FaEdit, FaTrash } from "react-icons/fa";
 
 const Prizes = () => {
   const [prizeList, setPrizeList] = useState([]);
-  const [prizeNumber, setPrizeNumber] = useState(1);
   const [newPrizeNumber, setNewPrizeNumber] = useState("");
   const [newPrizeName, setNewPrizeName] = useState("");
   const [PrizesPic, setPrizesPic] = useState(rewards);
@@ -26,13 +25,6 @@ const Prizes = () => {
   const prizesCollectionRef = collection(db, "prizes");
 
   
-  const updateLastPrizeNumber = async(number)=>{
-    const docRef = doc(db, "prizeNumber", "lastPrizeNumber");
-   const docSnap = await updateDoc(docRef,{
-    dbLastNumber : number}
-    )
-  }
-
   const getPrizes = async () => {
     const data = query(prizesCollectionRef, orderBy("number", "asc"));
     const dataSnapshot = await getDocs(data);
@@ -41,8 +33,6 @@ const Prizes = () => {
     );
   };
   
-
-
 
   const deletePrize = async(id) =>{
     const prizeRef = doc(db,"prizes",id);
