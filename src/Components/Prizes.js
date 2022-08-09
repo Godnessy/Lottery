@@ -17,19 +17,14 @@ import { FaEdit, FaTrash } from "react-icons/fa";
 
 const Prizes = () => {
   const [prizeList, setPrizeList] = useState([]);
-  const [prizeNumber, setPrizeNumber] = useState(1);
-  const [newPrize, setNewPrize] = useState("");
+  const [newPrizeNumber, setNewPrizeNumber] = useState("");
+  const [newPrizeName, setNewPrizeName] = useState("");
   const [PrizesPic, setPrizesPic] = useState(rewards);
+  const [updatePrizeList, setUpdatePrizeList] = useState(false)
+  const [isEditing, setIsEditing] = useState(false)
   const prizesCollectionRef = collection(db, "prizes");
 
   
-  const updateLastPrizeNumber = async(number)=>{
-    const docRef = doc(db, "prizeNumber", "lastPrizeNumber");
-   const docSnap = await updateDoc(docRef,{
-    dbLastNumber : number}
-    )
-  }
-
   const getPrizes = async () => {
     const data = query(prizesCollectionRef, orderBy("number", "asc"));
     const dataSnapshot = await getDocs(data);
@@ -39,52 +34,55 @@ const Prizes = () => {
   };
   
 
-  const getLastPrizeNumber = async () =>{
-    const docRef = doc(db, "prizeNumber", "lastPrizeNumber");
-    const docSnap = await getDoc(docRef);
-    if (docSnap.exists()) {
-      const {dbLastNumber} = docSnap.data()
-      setPrizeNumber(dbLastNumber)
-      console.log(`Current last prize number: ${dbLastNumber}`);
-    } else {
-      console.log("No such document!");
-    }
-  }
-
-
   const deletePrize = async(id) =>{
     const prizeRef = doc(db,"prizes",id);
     const remainingPrizes = prizeList.filter(prize => prize.id !== id);
     await deleteDoc(prizeRef);
     setPrizeList(remainingPrizes);
-    if(remainingPrizes.length == 0){
-      setPrizeNumber(1);
-      updateLastPrizeNumber(1)
-    }
-  
   }
 
   useEffect(() => {  
       getPrizes();
-      getLastPrizeNumber();
-      console.log("prize call made");
-  }, [prizeNumber]);
+  }, [updatePrizeList]);
 
   const addNewPrize = async (e) => {
     e.preventDefault();
-    await addDoc(prizesCollectionRef, {
-      prizeName: newPrize,
-      number: prizeNumber,
-    });
-    setPrizeNumber(prizeNumber+1);
-    updateLastPrizeNumber(prizeNumber+1)
-    setNewPrize("");
+    if(isNaN(Number(newPrizeNumber))){
+      alert(`Premienummer må være et tall`)
+      return
+    }
+    if (newPrizeName == '' || newPrizeNumber == ''){
+      return 
+    }   
+    else {
+      await addDoc(prizesCollectionRef, {
+        prizeName: newPrizeName,
+        number: Number(newPrizeNumber),
+      });
+      setNewPrizeName("");
+      setNewPrizeNumber("");
+      setUpdatePrizeList(!updatePrizeList)
+    }
+  
+}
+
+
+  const editPrize = async (id) => {
+    setIsEditing(true)
+    const prizeDoc = doc(db, "prizes", id);
+    const prizeToEdit = prizeList.filter((prize) => prize.id === id);
+    const remainingPrizes = prizeList.filter((prize) => prize.id !== id);
+    await deleteDoc(prizeDoc);
+    setPrizeList(remainingPrizes);
+    setNewPrizeName(prizeToEdit[0].prizeName);
+    setNewPrizeNumber(prizeToEdit[0].number);
   };
 
-  const editPrize = async (id, prizeName) => {
-    const prizeDoc = doc(db, "prizes", id);
-    
-  };
+  const submitEditedPrize = async (e) =>{
+    e.preventDefault();
+    addNewPrize()
+    setIsEditing(false)
+  }
 
   return (
     <div className="prize">
@@ -93,20 +91,36 @@ const Prizes = () => {
         <form
           className="form prize-form"
           onSubmit={(e) => {
-            addNewPrize(e);
+            {isEditing? submitEditedPrize(e) : addNewPrize(e)}
+            
           }}
         >
-          <label className="labels">Ny Premie:</label>
-          <input
+          <div className="nameCell">
+              <div>
+                <label className="labels prizeName">Premie Nummer:</label>
+                <input
             type="text"
-            value={newPrize}
+            value={newPrizeNumber}
             className="input prize-input"
             onChange={(e) => {
-              setNewPrize(e.target.value);
+              setNewPrizeNumber(e.target.value);
             }}
           />
-          <button className="btn btn-prize" type="submit">
-            Legg til ny premie
+              </div>
+              <div>
+                <label className="labels prizeNumber">Premie Navn:</label>
+                <input
+            type="text"
+            value={newPrizeName}
+            className="input prize-input"
+            onChange={(e) => {
+              setNewPrizeName(e.target.value);
+            }}
+          />
+              </div>
+            </div>
+          <button className={isEditing? 'btn edit-btn-prize':'btn btn-prize'} type="submit">
+            {isEditing? 'Rediger premie': 'Legg til ny premie'}
           </button>
         </form>
         <div className="prize-list-container">

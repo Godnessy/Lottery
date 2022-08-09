@@ -322,7 +322,7 @@ code {
 
 .prize-icons {
   position: relative;
-  /* top:25%; */
+  top:31%;
   left: 2rem;
 }
 
@@ -335,7 +335,7 @@ code {
 
   .prize-icons{
     position: relative;
-    top:25%;
+    top:3%;
   }
   
   .prize-item{
