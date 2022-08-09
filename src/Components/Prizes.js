@@ -43,12 +43,10 @@ const Prizes = () => {
 
   useEffect(() => {  
       getPrizes();
-      console.log("prize call made");
   }, [updatePrizeList]);
 
   const addNewPrize = async (e) => {
     e.preventDefault();
-    console.log(typeof(Number(newPrizeNumber)));
     if(isNaN(Number(newPrizeNumber))){
       alert(`Premienummer må være et tall`)
       return
@@ -68,15 +66,21 @@ const Prizes = () => {
   
 }
 
-  const editPrize = async (id, prizeName) => {
-    const prizeDoc = doc(db, "prizes", id);
+
+  const editPrize = async (id) => {
     setIsEditing(true)
-    console.log(id)
+    const prizeDoc = doc(db, "prizes", id);
+    const prizeToEdit = prizeList.filter((prize) => prize.id === id);
+    const remainingPrizes = prizeList.filter((prize) => prize.id !== id);
+    await deleteDoc(prizeDoc);
+    setPrizeList(remainingPrizes);
+    setNewPrizeName(prizeToEdit[0].prizeName);
+    setNewPrizeNumber(prizeToEdit[0].number);
   };
 
   const submitEditedPrize = async (e) =>{
     e.preventDefault();
-    console.log('submitted')
+    addNewPrize()
     setIsEditing(false)
   }
 

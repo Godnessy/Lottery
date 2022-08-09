@@ -50,7 +50,6 @@ function App() {
       const docRef = doc(db, "playersNumber", "lastNumber");
       const docSnap = await getDoc(docRef);
       if (docSnap.exists()) {
-        console.log(docSnap.data().lastNumber);
         return docSnap.data().lastNumber
     }
     return 0
@@ -92,8 +91,7 @@ function App() {
 
   useEffect(() => {
     getUserList()
-    console.log('call made')
-    console.log(`test list is: ${testList.length}`);
+    console.log('use effect activated in App.js');
   }, [updateList]);
 
 
@@ -121,7 +119,6 @@ function App() {
   };
 
   const deletePlayer = async (id) => {
-    console.log('started delete player action');
     const playerDoc = doc(db, "players", id);
     const remainingPlayers = testList.filter((player) => player.id !== id);
     await deleteDoc(playerDoc);
@@ -129,8 +126,6 @@ function App() {
     if (remainingPlayers.length == 0) {
       await setLastNumberDB(0)
     }
-    console.log(remainingPlayers.length);
-    console.log('ended delete player action');
   };
 
 
