@@ -6,14 +6,14 @@ const List = ({ testList, editPlayer, deletePlayer }) => {
     <div className="list-items">
       {testList.length > 0 &&
         testList.map((player) => {
-          const { tickets, name, id } = player;
+          const { firstTicket, lastTicket, name, id } = player;
           return (
             <div key={id} className="list-item">
+              
               <p className="names">{`${name}`}</p>
-              <p className="numbers">{`${tickets[0]} - ${tickets.slice(
-                -1
-              )}`}</p>
-              <div className="icons">
+              <p className="numbers">{`${firstTicket} - ${lastTicket
+              }`}</p>
+              <div className="icons form-icons">
                 <button className="edit-btn">
                   <FaEdit
                     className="edit"
