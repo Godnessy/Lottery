@@ -25,6 +25,36 @@ code {
     monospace;
 }
 
+.nav{
+  display:flex;
+}
+
+.navbar{
+  position: relative;
+  left:5%;
+}
+ul {
+  display:flex;
+  list-style-type: none
+}
+
+li a {
+  display: block;
+  text-align: center;
+  color:black;
+  font-size: 2em;
+  padding: 14px 16px;
+  text-decoration: underline;
+  background-color: beige;
+  margin: 2px;
+  border-radius: 20%;
+  padding: 5px;
+}
+
+li a:hover{
+color:#0096FF;
+}
+
 .setup-container {
   display: grid;
   grid-template-columns: 4fr 1fr;
