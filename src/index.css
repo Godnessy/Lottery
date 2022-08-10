@@ -134,7 +134,6 @@ code {
   align-items: center;
   justify-content: center;
   width: 50%;
-  height: 35%;
   background: #fff;
   padding: 2rem;
   border-radius: 0.5rem;
@@ -323,8 +322,25 @@ code {
 .prize-icons {
   position: relative;
   top:31%;
-  left: 2rem;
+  left: 1rem;
 }
+@media (max-width: 1930px){
+  .names{
+    font-size: 2em;
+  }
+
+  .numbers{
+    position:relative;
+    left:2em;
+    font-size:2em;
+  }
+
+  .form-icons{
+    position:relative;
+    top:40%;
+  }
+}
+
 
 @media (max-width: 1550px){
  
@@ -356,12 +372,16 @@ code {
     bottom: 1rem;
     right:23.5em;
   }
+  .list-item{
+    position:relative;
+    right:1em;
+  }
 }
 
 
 @media (max-width: 1441px) {
   .main-form{
-    height: 17em;
+    height: 10em;
   }
 .info{
   font-size: 1.3em;

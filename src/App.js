@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState,useRef } from "react";
 import "./App.css";
 import React from "react";
 import logo from "./images/mtt_logo.png";
@@ -31,16 +31,17 @@ function App() {
   const [name, setName] = useState("");
   const [tickets, setTickets] = useState("");
   const [testList, setTestList] = useState([]);
-  const [data, setData] = useState([]);
   const [updateList,setUpdateList] = useState(false)
   const namesCollectionRef = collection(db, "players");
+  const nameRef = useRef('')
+  const prizeRef =useRef('')
+  
  
 
 
   const getUserList = async () => {
       const data = query(namesCollectionRef, orderBy("time", "asc"));
       const dataSnapshot = await getDocs(data);
-      setData(dataSnapshot);
       setTestList(
         dataSnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
       );
@@ -91,6 +92,8 @@ function App() {
 
   useEffect(() => {
     getUserList()
+    nameRef.current.focus()
+    prizeRef.current.focus()
     console.log('use effect activated in App.js');
   }, [updateList]);
 
@@ -151,6 +154,7 @@ function App() {
                 <label className="labels nameLabel">Navn:</label>
                 <input
                   type="text"
+                  ref = {nameRef}
                   className="newName name"
                   value={name}
                   required
@@ -165,6 +169,7 @@ function App() {
                   value={tickets}
                   className="newName newTickets"
                   required
+                  ref = {prizeRef}
                   onChange={(e) => {
                     setTickets(Number(e.target.value));
                   }}
