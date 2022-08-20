@@ -66,32 +66,35 @@ import {
         return activePrize
       }
 
-    function startRound(playerList,prizeList){
-      //make a variable with the last number in the players list numbers
-      //make a list of all avaiable prizes to be rolled
-      //choose the first number from the prize to be rolled list and put an active class on it which will give it a purple check 
-      //calculator a random number between 1-last number in the set
-      //if the number exists in the list match it to the person it belongs to (filter number is between or equal to start and end number)
-    //if the number does not exist reroll 
-    //after the winning player is found put the prize number on the left side of their name 
+    function createRandomNumber(maxNumber){
+      return Math.trunc(Math.random()*Math.random()*maxNumber)+1
+      
+    }
+
+    function startRound(playerList){
+     
+    //winning player name gets inserted under the prize number/name on prize list
     //paint the bg color of the prize that was just rolled green and remove it from the prizes to be rolled list.
       if(prizePool.length == 0){
         alert(`Prize pool not ready yet`)
       } else {
       const lastNumber = playerList[playerList.length-1].lastTicket;
       const currentPrize = setActivePrize(prizePool[0][1])
-      const randomNumber = Math.trunc(Math.random()*Math.random()*lastNumber)+1    
+      let winner = [];
+   
+      while (winner.length == 0){
+        console.log('running while');
+        let randomNumber = createRandomNumber(lastNumber);
+        console.log(`random number is ${randomNumber}`);
+       winner =  playerList.filter((player)=>{
+            return player.firstTicket <= randomNumber && player.lastTicket >= randomNumber}) 
       }
-      const winner = playerList.filter((player)=>{
-        if(player.firstTicket <= randomNumber && player.lastTicket >= randomNumber){
-          return player
-        } else {
-          return false
-        }
+      console.log(winner);
 
-      })
-      // winner?  
     }
+  }
+
+  
 
    
     
@@ -135,12 +138,17 @@ import {
             prizeList.map((prize) => {
               const { prizeName, number, id } = prize;
               return (
+                <div className="individual-prize-container">
                 <div className={`prize-item ${id}`} key={id}>
                   <p className='checkMark'> <GiCheckMark /></p>
                   <h2 className='prizeNumber'>{number} : </h2>
                   <h2 className='prizeName'>{prizeName}</h2>
                   <p className='checkMark'> <GiCheckMark /></p>
-                 
+                </div>
+                 <p className={`winner ${id}`}>Langt navn</p>
+                 <hr  style={{
+                  width:100,
+                      }}/>
                 </div>
               );
             })} </div>
