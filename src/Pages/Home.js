@@ -19,10 +19,7 @@ import Navbar from "../Components/Navbar";
 
 /*
 Todo:
-- Change the way the submit proccess works - Take away the automatic array forming from the tickets variable and add a function that will do that only when the submit button is pressed and not before.
-1. make the prizes edit and delete buttons update the DB last number
-2. Instead of making an array of each player with all the numbers, make an array with start and finish numbers and check if the winning number is between these numbers.
-3. fetch data from DB on the next page -
+- Change useeffect of render to true and find a way to put a false in (on mount);
 4. create the play page which will show: player list, prize list, roll button and winner area.
 5. !! make an env file to store the firebase config
 */
@@ -30,7 +27,7 @@ Todo:
 const Home = ()=> {
   const [name, setName] = useState("");
   const [tickets, setTickets] = useState("");
-  const [testList, setTestList] = useState([]);
+  const [playerList, setplayerList] = useState([]);
   const [updateList,setUpdateList] = useState(false)
   const namesCollectionRef = collection(db, "players");
   const nameRef = useRef('')
@@ -42,7 +39,7 @@ const Home = ()=> {
   const getUserList = async () => {
       const data = query(namesCollectionRef, orderBy("time", "asc"));
       const dataSnapshot = await getDocs(data);
-      setTestList(
+      setplayerList(
         dataSnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
       );
   }
@@ -83,7 +80,7 @@ const Home = ()=> {
     const dbOldLastNumber =  await getLastNumberFromDB();
     const playerFirstNumber = (dbOldLastNumber+1);
     const playerLastNumber = (playerFirstNumber + tickets)
-    registerNewPlayer(name,playerFirstNumber,playerLastNumber)
+    await registerNewPlayer(name,playerFirstNumber,playerLastNumber)
     await setLastNumberDB(playerLastNumber)
     setUpdateList(!updateList)
     setName("");
@@ -93,17 +90,16 @@ const Home = ()=> {
   useEffect(() => {
     getUserList()
     nameRef.current.focus()
-    prizeRef.current.focus()
     console.log('use effect activated in App.js');
   }, [updateList]);
 
 
   const editPlayer = async (id) => {
     const playerDoc = doc(db, "players", id);
-    const playerToEdit = testList.filter((player) => player.id === id);
-    const remainingPlayers = testList.filter((player) => player.id !== id);
+    const playerToEdit = playerList.filter((player) => player.id === id);
+    const remainingPlayers = playerList.filter((player) => player.id !== id);
     await deleteDoc(playerDoc);
-    setTestList(remainingPlayers);
+    setplayerList(remainingPlayers);
     if (remainingPlayers.length == 0) {
      await setLastNumberDB(0)
     }
@@ -123,9 +119,9 @@ const Home = ()=> {
 
   const deletePlayer = async (id) => {
     const playerDoc = doc(db, "players", id);
-    const remainingPlayers = testList.filter((player) => player.id !== id);
+    const remainingPlayers = playerList.filter((player) => player.id !== id);
     await deleteDoc(playerDoc);
-    setTestList(remainingPlayers);
+    setplayerList(remainingPlayers);
     if (remainingPlayers.length == 0) {
       await setLastNumberDB(0)
     }
@@ -137,7 +133,9 @@ const Home = ()=> {
     <main>
       <div className="nav">
       <img src={logo} alt="" className="logo" />
+   
       <Navbar></Navbar>
+      
 
       </div>
       <h1 className="title">MTT Fredags Lotteri</h1>
@@ -187,7 +185,7 @@ const Home = ()=> {
               <button
                 className="btn-reset"
                 type="button"
-                onClick={() => resetList(testList)}
+                onClick={() => resetList(playerList)}
               >
                 Reset
               </button>
@@ -201,7 +199,7 @@ const Home = ()=> {
             </div>
             <div className="list-items-container">
               <List
-                testList={testList}
+                playerList={playerList}
                 editPlayer={editPlayer}
                 deletePlayer={deletePlayer}
               />
