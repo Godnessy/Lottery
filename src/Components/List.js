@@ -1,11 +1,11 @@
 import React from "react";
 import { FaEdit, FaTrash } from "react-icons/fa";
 
-const List = ({ testList, editPlayer, deletePlayer }) => {
+const List = ({ playerList, editPlayer, deletePlayer }) => {
   return (
     <div className="list-items">
-      {testList.length > 0 &&
-        testList.map((player) => {
+      {playerList.length > 0 &&
+        playerList.map((player) => {
           const { firstTicket, lastTicket, name, id } = player;
           return (
             <div key={id} className="list-item">
