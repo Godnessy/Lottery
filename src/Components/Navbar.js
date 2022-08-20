@@ -4,11 +4,11 @@ function Navbar() {
   return (
     <div className='navbar'>
         <ul>
-            <li>
+            <li className='setup-button'>
                 <a href='/'> Setup</a>
             </li>
-            <li>
-                <a href='/play'> Spill</a>
+            <li >
+                <a href='/play' className='play-button'> Spill</a>
             </li>
         </ul>
     </div>
