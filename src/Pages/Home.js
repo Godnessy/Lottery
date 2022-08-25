@@ -17,12 +17,6 @@ import List from "../Components/List";
 import Prizes from "../Components/Prizes";
 import Navbar from "../Components/Navbar";
 
-/*
-Todo:
-- Change useeffect of render to true and find a way to put a false in (on mount);
-4. create the play page which will show: player list, prize list, roll button and winner area.
-5. !! make an env file to store the firebase config
-*/
 
 const Home = ()=> {
   const [name, setName] = useState("");
@@ -126,6 +120,7 @@ const Home = ()=> {
       await setLastNumberDB(0)
     }
   };
+
 
 
 

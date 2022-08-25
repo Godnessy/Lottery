@@ -18,6 +18,7 @@ import {
   getDoc,
   updateDoc,
 } from "firebase/firestore";
+import Rewards from "../Components/Rewards";
 
 const Play = () => {
   const [playerList, setplayerList] = useState([]);
@@ -193,6 +194,7 @@ const Play = () => {
         </div>
 
         <div className="play-prize-list">
+          <Rewards />
           {prizeList.length > 0 &&
             prizeList.map((prize) => {
               const { prizeName, number, id } = prize;
