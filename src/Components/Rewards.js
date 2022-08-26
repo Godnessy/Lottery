@@ -16,7 +16,8 @@ function Rewards({updateState,updateStateFunc}) {
   
   useEffect(() => {
     getPicFromCloud();
-  }, [updateState]);
+    console.log(`get pic sent`);
+  }, []);
 
 
   return (
