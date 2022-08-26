@@ -77,7 +77,7 @@ const Play = () => {
   }
 
   function createRandomNumber(maxNumber) {
-    return Math.trunc(Math.random() * Math.random() * maxNumber) + 1;
+    return Math.trunc(Math.random() * maxNumber) + 1;
   }
 
   const delayBetweenRandomNumbers = (time) => {
@@ -130,6 +130,7 @@ const Play = () => {
       let randomNumber;
       while (winner.length == 0) {
         randomNumber = createRandomNumber(lastNumber);
+        console.log(lastNumber);
         winner = playerList.filter((player) => {
           return (
             player.firstTicket <= randomNumber &&

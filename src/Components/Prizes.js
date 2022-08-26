@@ -44,8 +44,7 @@ const Prizes = () => {
 
   useEffect(() => {
     getPrizes();
-
-  }, [updatePrizeList]);
+  }, [updatePrizeList,prizePicState]);
 
   const addNewPrize = async (e) => {
     e.preventDefault();
