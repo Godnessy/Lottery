@@ -73,7 +73,7 @@ const Home = ()=> {
     }
     const dbOldLastNumber =  await getLastNumberFromDB();
     const playerFirstNumber = (dbOldLastNumber+1);
-    const playerLastNumber = (playerFirstNumber + tickets)
+    const playerLastNumber = (playerFirstNumber + tickets-1)
     await registerNewPlayer(name,playerFirstNumber,playerLastNumber)
     await setLastNumberDB(playerLastNumber)
     setUpdateList(!updateList)
