@@ -77,7 +77,7 @@ const Play = () => {
   }
 
   function createRandomNumber(maxNumber) {
-    return Math.trunc(Math.random() * Math.random() * maxNumber) + 1;
+    return Math.trunc(Math.random() * maxNumber) + 1;
   }
 
   const delayBetweenRandomNumbers = (time) => {
