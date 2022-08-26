@@ -100,13 +100,14 @@ const Play = () => {
       return prize.classList[0].split("-")[1] == prizeId;
     });
     const winnerLine = `🥳🥳${winnerName} vinner premie nummer ${prizeNumber}: ${prizeName} 🥳🥳`;
-    setTimeout(() => {
+    const winnerTimeOut = setTimeout(() => {
       setWinnerBanner(winnerLine);
       setTimeout(() => {
         setWinnerBanner("");
       }, 5000);
       prizeWinnerEle[0].textContent = `${winnerName}🥳`;
     }, 2500);
+    // return clearTimeout(winnerTimeOut);
   }
 
   function startRound(playerList) {
@@ -141,9 +142,10 @@ const Play = () => {
       handleWinner(winnerName, prizeId, prizeNumber, prizeName);
     }
     prizePool.shift();
-    setTimeout(() => {
+    const activePrizeTimeOut = setTimeout(() => {
       handleActivePrize(prizeId, false);
     }, 5000);
+    return clearTimeout(activePrizeTimeOut)
   }
 
   function addWinnersIdToRef(el) {
@@ -194,7 +196,8 @@ const Play = () => {
         </div>
 
         <div className="play-prize-list">
-          <Rewards />
+          <div className="rewards"><Rewards /></div>
+          <div className="inside-prize-list">
           {prizeList.length > 0 &&
             prizeList.map((prize) => {
               const { prizeName, number, id } = prize;
@@ -224,6 +227,7 @@ const Play = () => {
                 </div>
               );
             })}{" "}
+        </div>
         </div>
       </div>
     </main>

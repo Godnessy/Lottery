@@ -13,7 +13,7 @@ import {
   getDoc,
   doc,
 } from "firebase/firestore";
-import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { getStorage, ref, uploadBytes } from "firebase/storage";
 import { FaEdit, FaTrash } from "react-icons/fa";
 
 const Prizes = () => {
