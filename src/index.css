@@ -233,7 +233,7 @@ color:#0096FF;
 .prize-input {
   font-size: 1.2em;
   width: 90%;
-  margin: 1rem;
+  margin: 0.8rem;
   font-weight: bold;
 }
 .nameCell {
@@ -271,6 +271,7 @@ color:#0096FF;
   background: #fffaf1;
   width: 50%;
   border-radius: 0.5rem;
+  font-weight: bold;
 }
 
 .ms {
@@ -285,6 +286,7 @@ color:#0096FF;
   border-radius: 0.5rem;
 }
 
+
 .titles-container {
   display: flex;
   flex-direction: row;
@@ -295,28 +297,34 @@ color:#0096FF;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: space-between;
+}
+.names{
+  position: relative;
+  right:2.5em;
+}
+
+.list-name{
+  margin-left:0.7em
 }
 
 .list-item {
   display:grid;
   grid-template-columns: 2fr 2fr 1fr;
-}
-
-.list-numbers{
-  position: relative;
-  /* left: 1em; */
-}
-
-.names{
-  position: relative;
-  right: 2em;
+  justify-content: center;
+  align-items: center;
 }
 
 .numbers{
   position: relative;
-  left: 5em;
+  left: 3em;
+  font-size: 1.5em;
 }
 
+.icons{
+  position: relative;
+  left:3em
+}
 
 .form-icons{
   position:relative;
@@ -398,19 +406,13 @@ color:#0096FF;
 
 .prize-icons {
   position: relative;
-  top:31%;
   left: 1rem;
 }
 @media (max-width: 1930px){
   .names{
-    font-size: 2em;
+    font-size: 1.5em;
   }
 
-  .numbers{
-    position:relative;
-    left:2em;
-    font-size:2em;
-  }
 
   .form-icons{
     position:relative;
@@ -419,16 +421,23 @@ color:#0096FF;
 }
 
 
-@media (max-width: 1550px){
+@media (max-width: 1560px){
+.titles-container{
+  display: flex;
+  align-items: left;
+  justify-content: space-between;
+}
+.list-numbers{
+  margin-right:20%;
+}
  
+
   .names{
     position: relative;
-    right:0.5em;
   }
 
   .prize-icons{
     position: relative;
-    top:3%;
   }
   
   .prize-item{
@@ -448,10 +457,6 @@ color:#0096FF;
     position: relative;
     bottom: 1rem;
     right:23.5em;
-  }
-  .list-item{
-    position:relative;
-    right:1em;
   }
 }
 

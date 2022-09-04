@@ -87,6 +87,11 @@ const Home = ()=> {
     console.log('use effect activated in App.js');
   }, [updateList]);
 
+  useEffect(() => {
+    console.log(`playerlist useeffect`);
+  }, [playerList])
+  
+
 
   const editPlayer = async (id) => {
     const playerDoc = doc(db, "players", id);
@@ -106,6 +111,7 @@ const Home = ()=> {
       const { id } = player;
       const playerDoc = doc(db, "players", id);
       deleteDoc(playerDoc);
+      setplayerList([])
       return setLastNumberDB(0)
     });
     
