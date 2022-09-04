@@ -32,6 +32,8 @@ const Play = () => {
   const prizeWinnerRef = useRef([]);
   prizeWinnerRef.current = [];
 
+  const [winningNumbers, setwinningNumbers] = useState([]);
+
   const getPlayerList = async () => {
     const data = query(namesCollectionRef, orderBy("time", "asc"));
     const dataSnapshot = await getDocs(data);
@@ -76,8 +78,14 @@ const Play = () => {
     }
   }
 
-  function createRandomNumber(maxNumber) {
-    return Math.trunc(Math.random() * maxNumber) + 1;
+  function createRandomNumber(maxNumber, winningNumbers) {
+    let randomNumber = Math.trunc(Math.random() * maxNumber) + 1;
+    if (winningNumbers.includes(randomNumber)) {
+      return createRandomNumber(maxNumber, winningNumbers);
+    } else {
+      setwinningNumbers([...winningNumbers, randomNumber]);
+      return randomNumber;
+    }
   }
 
   const delayBetweenRandomNumbers = (time) => {
@@ -95,7 +103,13 @@ const Play = () => {
     setRandomNumber(winningNumber);
   }
 
-  function handleWinner(winnerName, prizeId, prizeNumber, prizeName) {
+  function handleWinner(
+    winnerName,
+    prizeId,
+    prizeNumber,
+    prizeName,
+    winningNumber
+  ) {
     const prizeWinnerEle = prizeWinnerRef.current.filter((prize) => {
       return prize.classList[0].split("-")[1] == prizeId;
     });
@@ -105,9 +119,9 @@ const Play = () => {
       setTimeout(() => {
         setWinnerBanner("");
       }, 5000);
-      prizeWinnerEle[0].textContent = `${winnerName}🥳`;
+      prizeWinnerEle[0].textContent = `${winningNumber}:${winnerName}🥳`;
     }, 2500);
-    // return clearTimeout(winnerTimeOut);
+    return clearTimeout(winnerTimeOut);
   }
 
   function startRound(playerList) {
@@ -129,24 +143,23 @@ const Play = () => {
       let winner = [];
       let randomNumber;
       while (winner.length == 0) {
-        randomNumber = createRandomNumber(lastNumber);
-        console.log(lastNumber);
+        randomNumber = createRandomNumber(lastNumber, winningNumbers);
         winner = playerList.filter((player) => {
           return (
             player.firstTicket <= randomNumber &&
             player.lastTicket >= randomNumber
           );
         });
+        const winnerName = winner[0].name;
+        randomNumberAnimation(randomNumber);
+        handleWinner(winnerName, prizeId, prizeNumber, prizeName, randomNumber);
       }
-      const winnerName = winner[0].name;
-      randomNumberAnimation(randomNumber);
-      handleWinner(winnerName, prizeId, prizeNumber, prizeName);
     }
     prizePool.shift();
     const activePrizeTimeOut = setTimeout(() => {
       handleActivePrize(prizeId, false);
     }, 5000);
-    return clearTimeout(activePrizeTimeOut)
+    return clearTimeout(activePrizeTimeOut);
   }
 
   function addWinnersIdToRef(el) {
@@ -168,7 +181,7 @@ const Play = () => {
             playerList.map((player) => {
               const { firstTicket, lastTicket, name, id } = player;
               return (
-                <div key={id} className="list-item">
+                <div key={id} className="play-list-item">
                   <p className="names">{`${name}`}</p>
                   <p className="numbers">{`${firstTicket} - ${lastTicket}`}</p>
                 </div>
@@ -197,38 +210,40 @@ const Play = () => {
         </div>
 
         <div className="play-prize-list">
-          <div className="rewards"><Rewards /></div>
+          <div className="rewards">
+            <Rewards />
+          </div>
           <div className="inside-prize-list">
-          {prizeList.length > 0 &&
-            prizeList.map((prize) => {
-              const { prizeName, number, id } = prize;
-              return (
-                <div className="individual-prize-container" key={id}>
-                  <div className={`prize-item ${id}`}>
-                    <p className="checkMark">
-                      {" "}
-                      <GiCheckMark />
-                    </p>
-                    <h2 className={`prizeNumber-${id}`}>{number} : </h2>
-                    <h2 className={`prizeName-${id}`}>{prizeName}</h2>
-                    <p className="checkMark">
-                      {" "}
-                      <GiCheckMark />
-                    </p>
+            {prizeList.length > 0 &&
+              prizeList.map((prize) => {
+                const { prizeName, number, id } = prize;
+                return (
+                  <div className="individual-prize-container" key={id}>
+                    <div className={`prize-item ${id}`}>
+                      <p className="checkMark">
+                        {" "}
+                        <GiCheckMark />
+                      </p>
+                      <h2 className={`prizeNumber-${id}`}>{number} : </h2>
+                      <h2 className={`prizeName-${id}`}>{prizeName}</h2>
+                      <p className="checkMark">
+                        {" "}
+                        <GiCheckMark />
+                      </p>
+                    </div>
+                    <p
+                      className={`winner-${id} winner-el`}
+                      ref={addWinnersIdToRef}
+                    ></p>
+                    <hr
+                      style={{
+                        width: 100,
+                      }}
+                    />
                   </div>
-                  <p
-                    className={`winner-${id} winner-el`}
-                    ref={addWinnersIdToRef}
-                  ></p>
-                  <hr
-                    style={{
-                      width: 100,
-                    }}
-                  />
-                </div>
-              );
-            })}{" "}
-        </div>
+                );
+              })}
+          </div>
         </div>
       </div>
     </main>

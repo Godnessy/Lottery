@@ -13,7 +13,7 @@ const List = ({ playerList, editPlayer, deletePlayer }) => {
               <p className="names">{`${name}`}</p>
               <p className="numbers">{`${firstTicket} - ${lastTicket
               }`}</p>
-              <div className="icons form-icons">
+              <div className="icons">
                 <button className="edit-btn">
                   <FaEdit
                     className="edit"
