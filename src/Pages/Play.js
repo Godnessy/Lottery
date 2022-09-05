@@ -1,23 +1,11 @@
 import React from "react";
 import { useState, useEffect, useRef } from "react";
-import List from "../Components/List";
-import Prizes from "../Components/Prizes";
 import Navbar from "../Components/Navbar";
 import { GiCheckMark } from "react-icons/gi";
 import "./Play.css";
 import logo from "../images/mtt_logo.png";
 import { db } from "../firebase-config";
-import {
-  collection,
-  getDocs,
-  addDoc,
-  orderBy,
-  query,
-  deleteDoc,
-  doc,
-  getDoc,
-  updateDoc,
-} from "firebase/firestore";
+import { collection, getDocs, orderBy, query } from "firebase/firestore";
 import Rewards from "../Components/Rewards";
 
 const Play = () => {
@@ -120,8 +108,8 @@ const Play = () => {
         setWinnerBanner("");
       }, 5000);
       prizeWinnerEle[0].textContent = `${winningNumber}:${winnerName}🥳`;
+      return clearTimeout(winnerTimeOut);
     }, 2500);
-    return clearTimeout(winnerTimeOut);
   }
 
   function startRound(playerList) {
