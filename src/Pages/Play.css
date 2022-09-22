@@ -1,3 +1,7 @@
+body{
+    cursor:auto;
+}
+
 .container{
     display: grid;
     grid-template-columns: 1.5fr 3fr 1fr;
@@ -33,33 +37,31 @@ border-radius: 15px;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 9em;
-
 }
 .play-prize-list{
     width: 80%;
-    height: 50%;
     font-size: 1em;
-    margin-top:50%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
     border-radius: 0.5rem;
+    position: relative;
+    height: 80%;
 }
 .current-prizes-pic{
     width: 100%;
+    height: 20%;
 }
 
 .inside-prize-list{
     background: #fff;
-    width: 100%;
+    width: 110%;
+    border-radius: 2%;
 }
 .rewards{
-    margin-bottom:2em;
+    width: 80%;
+    margin-bottom:0.5em;
     background-color: transparent;
+    position: relative;
+    left:15%;
 }
-
 .prize-item{
     display: flex;
     flex-direction: row;
@@ -68,16 +70,14 @@ border-radius: 15px;
     position: relative;
 }
 
-.active{
-    color:red;
+.prize-item h3{
+    font-size: 1.5em;
+    margin-top:5px;
+    margin-bottom:10px;
 }
 
-
-.checkMark{
-    font-size: 1.5em;
-    color:purple;
-    margin-left:10px;
-    display:none;
+.active{
+    color:red;
 }
 
 .prizeNumber{
@@ -90,25 +90,41 @@ border-radius: 15px;
 .game-container{
    display:grid;
    grid-template-columns: 1fr 1fr;
-   grid-template-rows: 1fr 5fr;
+   grid-template-rows: 1fr 1fr;
    grid-template-areas:
-   "winner winner"
-   "number play-button";
+   "number play-button"
+   "winner winner";
     
 }
 .winnerAlert{
+    display:flex;
+    align-items: center;
+    justify-content: center;
     grid-area: winner;
+    height: 50%;
+    margin-top:5%;
+    font-size: 1.7em;
+    position: relative;
+    bottom:50%;
+}
+
+.game-button{
+    grid-area: play-button;
+    display: flex;
+    justify-content: center;
+    height: 50%;    
+}
+
+.game-number{
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    width: 100%;
-    height: 100%;
-    font-size: 1.7em;
+    grid-area: number;
+    height: 50%;
 }
-
 .winner-el{
     font-size: 1.5em;
+    margin:0;
     text-decoration: underline;
 }
 
@@ -120,13 +136,6 @@ border-radius: 15px;
     height: 50%;
 }
 
-.game-number{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    grid-area: number;
-
-}
 .win-title{
     font-size: 3em;
     position: relative;
@@ -139,15 +148,11 @@ border-radius: 15px;
    
 }
 
-.game-button{
-    grid-area: play-button;
-    display: flex;
-    justify-content: center;
-    }
+
 .start-game{
     position: relative;
     top:3em;    
-    height: 15%;
+    height: 50%;
     width: 40%;
     font-size: 3em;
     background-color: #48abe0;

@@ -98,17 +98,14 @@ const Play = () => {
     prizeName,
     winningNumber
   ) {
+    setWinnerBanner("");
     const prizeWinnerEle = prizeWinnerRef.current.filter((prize) => {
       return prize.classList[0].split("-")[1] == prizeId;
     });
     const winnerLine = `🥳🥳${winnerName} vinner premie nummer ${prizeNumber}: ${prizeName} 🥳🥳`;
     const winnerTimeOut = setTimeout(() => {
       setWinnerBanner(winnerLine);
-      setTimeout(() => {
-        setWinnerBanner("");
-      }, 5000);
       prizeWinnerEle[0].textContent = `${winningNumber}:${winnerName}🥳`;
-      return clearTimeout(winnerTimeOut);
     }, 2500);
   }
 
@@ -119,7 +116,7 @@ const Play = () => {
         : setWinnerBanner(`Alle premiene tildelt.`);
     const prizeId = currentPrize[0];
     if (prizePool.length == 0) {
-      setWinnerBanner(`Laster premie listen`);
+      setWinnerBanner(`Laster premie listen,prøv igjen om 10 sekunder`);
       setTimeout(() => {
         setWinnerBanner("");
       }, 3000);
@@ -177,10 +174,6 @@ const Play = () => {
             })}
         </div>
         <div className="game-container">
-          <div className="winnerAlert">
-            {winnerBanner !== "" && winnerBanner}
-          </div>
-
           <div className="game-number">
             <p className="win-title">Vinner Tall:</p>
             <p className="winning-number">{randomNumber}</p>
@@ -195,6 +188,9 @@ const Play = () => {
               Spill
             </button>
           </div>
+          <div className="winnerAlert">
+            {winnerBanner !== "" && winnerBanner}
+          </div>
         </div>
 
         <div className="play-prize-list">
@@ -208,16 +204,8 @@ const Play = () => {
                 return (
                   <div className="individual-prize-container" key={id}>
                     <div className={`prize-item ${id}`}>
-                      <p className="checkMark">
-                        {" "}
-                        <GiCheckMark />
-                      </p>
-                      <h2 className={`prizeNumber-${id}`}>{number} : </h2>
-                      <h2 className={`prizeName-${id}`}>{prizeName}</h2>
-                      <p className="checkMark">
-                        {" "}
-                        <GiCheckMark />
-                      </p>
+                      <h3 className={`prizeNumber ${id}`}>{number} : </h3>
+                      <h3 className={`prizeName ${id}`}>{prizeName}</h3>
                     </div>
                     <p
                       className={`winner-${id} winner-el`}
