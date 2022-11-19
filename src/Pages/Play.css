@@ -71,9 +71,16 @@ border-radius: 15px;
 }
 
 .prize-item h3{
-    font-size: 1.2em;
+    font-size: 1.4em;
     margin-top:5px;
     margin-bottom:10px;
+}
+
+@media screen and (max-width: 1540px) {
+    .prize-item h3{
+        font-size:1.2em;
+    }
+    
 }
 
 .active{
