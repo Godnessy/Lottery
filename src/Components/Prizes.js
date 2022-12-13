@@ -143,34 +143,38 @@ const Prizes = ({ showModal, setShowModal }) => {
         <div className="prize-list-container">
           <div className="prize-list">
             <h2>Premie Liste:</h2>
-            {prizeList.length > 0 &&
-              prizeList.map((prize) => {
-                const { prizeName, number, id } = prize;
-                return (
-                  <div className="prize-item" key={id}>
-                    <h2>{number} : </h2>
-                    <h2>{prizeName}</h2>
-                    <div className="icons prize-icons">
-                      <button className="edit-btn">
+            <table>
+              <tr>
+                <th>#</th>
+                <th>Premie</th>
+              </tr>
+              {prizeList.length > 0 &&
+                prizeList.map((prize) => {
+                  const { prizeName, number, id } = prize;
+                  return (
+                    <tr key={id}>
+                      <td>{number}</td>
+                      <td>{prizeName}</td>
+                      <td>
                         <FaEdit
                           className="edit"
                           onClick={() => {
                             editPrize(id, prizeName);
                           }}
                         />
-                      </button>
-                      <button className="delete-btn">
+                      </td>
+                      <td>
                         <FaTrash
                           className="delete"
                           onClick={() => {
                             deletePrize(id);
                           }}
                         />
-                      </button>
-                    </div>
-                  </div>
-                );
-              })}
+                      </td>
+                    </tr>
+                  );
+                })}
+            </table>
           </div>
         </div>
       </div>

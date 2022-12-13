@@ -15,7 +15,6 @@ Give the title a bit more space to the bottom
 and move it to the center
 */
 
-
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
@@ -43,13 +42,13 @@ code {
     monospace;
 }
 
-.nav{
-  display:flex;
+.nav {
+  display: flex;
 }
 
-.navbar{
+.navbar {
   position: absolute;
-  right:3%;
+  right: 3%;
   font-size: 2em;
   padding: 14px 16px;
   margin: 2px;
@@ -57,48 +56,47 @@ code {
   padding: 5px;
 }
 
-
 ul {
-  display:flex;
-  list-style-type: none
+  display: flex;
+  list-style-type: none;
 }
 
 li a {
   display: block;
   text-align: center;
-  color:black;
+  color: black;
 }
 
-li a:hover{
-color:#0096FF;
+li a:hover {
+  color: #0096ff;
 }
 
-.setup-button{
- font-size: 0.75em;
- position: relative;
- top: 9px;
- /* text-decoration: underline; */
+.setup-button {
+  font-size: 0.75em;
+  position: relative;
+  top: 9px;
+  /* text-decoration: underline; */
 }
 
-.play-button{
-    /* box-shadow: 0px 1px 0px 0px #f0f7fa; */
-    background:linear-gradient(to bottom, #33bdef 5%, #019ad2 100%);
-    background-color:#33bdef;
-    border-radius:28px;
-    /* border:1px solid; */
-    display:inline-block;
-    cursor:pointer;
-    color:#ffffff;
-    font-family:Arial;
-    font-size:0.8em;
-    font-weight:bold;
-    padding:6px 24px;
-    text-decoration:none ;
-    margin-left:1.5em;
+.play-button {
+  /* box-shadow: 0px 1px 0px 0px #f0f7fa; */
+  background: linear-gradient(to bottom, #33bdef 5%, #019ad2 100%);
+  background-color: #33bdef;
+  border-radius: 28px;
+  /* border:1px solid; */
+  display: inline-block;
+  cursor: pointer;
+  color: #ffffff;
+  font-family: Arial;
+  font-size: 0.8em;
+  font-weight: bold;
+  padding: 6px 24px;
+  text-decoration: none;
+  margin-left: 1.5em;
 }
 
-.play-button :hover{
-  color:red
+.play-button :hover {
+  color: red;
 }
 
 .setup-container {
@@ -179,14 +177,14 @@ color:#0096FF;
   cursor: pointer;
 }
 .btn-reset:active {
-  color:red
+  color: red;
 }
 
 .btn-prize {
   font-size: 1.2em;
-  color:white;
+  color: white;
 }
-.edit-btn-prize{
+.edit-btn-prize {
   font-size: 1.2em;
   background-color: lightgreen;
 }
@@ -248,7 +246,7 @@ color:#0096FF;
   padding: 0.5rem;
   font-size: 1rem;
   font-weight: bold;
-  color: #333;;
+  color: #333;
 }
 
 .labels {
@@ -286,60 +284,57 @@ color:#0096FF;
   border-radius: 0.5rem;
 }
 
-
 .titles-container {
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
 }
 
-.list-items-container{
+.list-items-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
 }
-.names{
+.names {
   position: relative;
-  right:2.5em;
+  right: 2.5em;
 }
 
-.list-name{
-  margin-left:0.7em
+.list-name {
+  margin-left: 0.7em;
 }
 
 .list-item {
-  display:grid;
+  display: grid;
   grid-template-columns: 2fr 2fr 1fr;
   justify-content: center;
   align-items: center;
 }
 
-.numbers{
+.numbers {
   position: relative;
   left: 3em;
   font-size: 1.5em;
 }
 
-.icons{
+.icons {
   position: relative;
-  left:3em
+  left: 3em;
 }
 
-.form-icons{
-  position:relative;
-  top:25%;
-  left:5em;
+.form-icons {
+  position: relative;
+  top: 25%;
+  left: 5em;
 }
 
-.icons .edit {
+.edit {
   color: lightgreen;
 }
-.icons .delete {
+.delete {
   color: red;
 }
-
-
 
 .edit-btn,
 .delete-btn {
@@ -392,13 +387,11 @@ color:#0096FF;
   border-radius: 0.5rem;
 }
 
-.prize-list{
-  display:flex;
+.prize-list {
+  display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content:space-between;
-
-
+  justify-content: space-between;
 }
 .prize-item {
   display: flex;
@@ -408,82 +401,102 @@ color:#0096FF;
   position: relative;
   left: 1rem;
 }
-@media (max-width: 1930px){
-  .names{
+
+/* Prizes table */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #f2f2f2;
+}
+
+th {
+  font-weight: bold;
+  color: black;
+}
+
+td {
+  padding: 10px;
+  font-size: 1.3em;
+}
+
+tr:nth-child(odd) {
+  background-color: #f2f2f2;
+}
+
+tr:nth-child(even) {
+  background-color: #ffffff;
+}
+@media (max-width: 1930px) {
+  .names {
     font-size: 1.5em;
   }
 
-
-  .form-icons{
-    position:relative;
-    top:40%;
+  .form-icons {
+    position: relative;
+    top: 40%;
   }
 }
 
+@media (max-width: 1560px) {
+  .titles-container {
+    display: flex;
+    align-items: left;
+    justify-content: space-between;
+  }
+  .list-numbers {
+    margin-right: 20%;
+  }
 
-@media (max-width: 1560px){
-.titles-container{
-  display: flex;
-  align-items: left;
-  justify-content: space-between;
-}
-.list-numbers{
-  margin-right:20%;
-}
- 
-
-  .names{
+  .names {
     position: relative;
   }
 
-  .prize-icons{
+  .prize-icons {
     position: relative;
   }
-  
-  .prize-item{
+
+  .prize-item {
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
     align-items: center;
   }
- 
-  #btn-addPlayer{
+
+  #btn-addPlayer {
     font-size: 1em;
     position: relative;
-    bottom:1rem;
+    bottom: 1rem;
   }
 
-  .btn-reset{
+  .btn-reset {
     position: relative;
     bottom: 1rem;
-    right:23.5em;
+    right: 23.5em;
   }
 }
-
 
 @media (max-width: 1441px) {
-  .main-form{
+  .main-form {
     height: 10em;
   }
-.info{
-  font-size: 1.3em;
-}
- 
-
-  .name{
-  position: relative;
-  left: 4.5em;
+  .info {
+    font-size: 1.3em;
   }
 
-  .nameLabel{
-  position: relative;
-  top:1em;
+  .name {
+    position: relative;
+    left: 4.5em;
   }
-  .newTickets{
+
+  .nameLabel {
+    position: relative;
+    top: 1em;
+  }
+  .newTickets {
     font-size: 0.8em;
   }
 
-  .btn-container{
+  .btn-container {
     justify-content: space-between;
     width: 11em;
   }
@@ -492,32 +505,26 @@ color:#0096FF;
     font-size: 1em;
     position: relative;
     left: 15em;
-    
   }
-  .list-items{
+  .list-items {
     display: flex;
-    justify-content:center;
+    justify-content: center;
     align-items: center;
-    
   }
-  .prize-pic{
+  .prize-pic {
     position: relative;
-    left:0.9em;
+    left: 0.9em;
   }
-  .prize-form{
+  .prize-form {
     width: 90%;
     margin-bottom: 1rem;
   }
-
- 
 }
 @media (max-width: 1025px) {
-
   #btn-addPlayer {
     position: relative;
     right: 150em;
   }
- 
 }
 
 @media (max-width: 768px) {
@@ -525,7 +532,7 @@ color:#0096FF;
     margin-left: 1.7rem;
   }
 
-  .newTickets{
+  .newTickets {
     background-color: red;
   }
   .names {
