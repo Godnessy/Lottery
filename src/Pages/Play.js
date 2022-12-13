@@ -189,7 +189,7 @@ const Play = () => {
             <Rewards />
           </div>
           <div className="inside-prize-list">
-            <h2>Premie Liste:</h2>
+            <h2 className="prize-list-title">Premie Liste:</h2>
             <table>
               <tr>
                 <th>#</th>
