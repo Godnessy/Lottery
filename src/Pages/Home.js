@@ -1,5 +1,5 @@
 import React from "react";
-import { useEffect, useState,useRef } from "react";
+import { useEffect, useState, useRef } from "react";
 import logo from "../images/mtt_logo.png";
 import { db } from "../firebase-config";
 import {
@@ -16,82 +16,77 @@ import {
 import List from "../Components/List";
 import Prizes from "../Components/Prizes";
 import Navbar from "../Components/Navbar";
+import PictureModal from "../Components/PictureModal";
 
-
-const Home = ()=> {
+const Home = () => {
   const [name, setName] = useState("");
   const [tickets, setTickets] = useState("");
   const [playerList, setplayerList] = useState([]);
-  const [updateList,setUpdateList] = useState(false)
+  const [updateList, setUpdateList] = useState(false);
   const namesCollectionRef = collection(db, "players");
-  const nameRef = useRef('')
-  const prizeRef =useRef('')
-  
- 
-
+  const nameRef = useRef("");
+  const prizeRef = useRef("");
 
   const getUserList = async () => {
-      const data = query(namesCollectionRef, orderBy("time", "asc"));
-      const dataSnapshot = await getDocs(data);
-      setplayerList(
-        dataSnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
-      );
-  }
+    const data = query(namesCollectionRef, orderBy("time", "asc"));
+    const dataSnapshot = await getDocs(data);
+    setplayerList(
+      dataSnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
+    );
+  };
 
-  const getLastNumberFromDB = async () =>{
-      const docRef = doc(db, "playersNumber", "lastNumber");
-      const docSnap = await getDoc(docRef);
-      if (docSnap.exists()) {
-        return docSnap.data().lastNumber
+  const getLastNumberFromDB = async () => {
+    const docRef = doc(db, "playersNumber", "lastNumber");
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) {
+      return docSnap.data().lastNumber;
     }
-    return 0
-  }
+    return 0;
+  };
 
-
-  const setLastNumberDB = async (number) =>{
+  const setLastNumberDB = async (number) => {
     const lastNumberRef = doc(db, "playersNumber", "lastNumber");
     await updateDoc(lastNumberRef, {
-      lastNumber: number
+      lastNumber: number,
     });
-  }
+  };
 
-  const registerNewPlayer = async(name,playerFirstNumber,playerLastNumber)=>{
+  const registerNewPlayer = async (
+    name,
+    playerFirstNumber,
+    playerLastNumber
+  ) => {
     await addDoc(namesCollectionRef, {
       name,
       firstTicket: playerFirstNumber,
       lastTicket: playerLastNumber,
       time: Date.now(),
     });
-    return true
-  }
+    return true;
+  };
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    if (tickets === 0 ){
-      alert(`Kan ikke kjøpe 0 billeter`)
-      return
+    if (tickets === 0) {
+      alert(`Kan ikke kjøpe 0 billeter`);
+      return;
     }
-    const dbOldLastNumber =  await getLastNumberFromDB();
-    const playerFirstNumber = (dbOldLastNumber+1);
-    const playerLastNumber = (playerFirstNumber + tickets-1)
-    await registerNewPlayer(name,playerFirstNumber,playerLastNumber)
-    await setLastNumberDB(playerLastNumber)
-    setUpdateList(!updateList)
+    const dbOldLastNumber = await getLastNumberFromDB();
+    const playerFirstNumber = dbOldLastNumber + 1;
+    const playerLastNumber = playerFirstNumber + tickets - 1;
+    await registerNewPlayer(name, playerFirstNumber, playerLastNumber);
+    await setLastNumberDB(playerLastNumber);
+    setUpdateList(!updateList);
     setName("");
     setTickets("");
   };
 
   useEffect(() => {
-    getUserList()
-    nameRef.current.focus()
-    console.log('use effect activated in App.js');
+    getUserList();
+    nameRef.current.focus();
   }, [updateList]);
 
-  useEffect(() => {
-    console.log(`playerlist useeffect`);
-  }, [playerList])
-  
-
+  useEffect(() => {}, [playerList]);
 
   const editPlayer = async (id) => {
     const playerDoc = doc(db, "players", id);
@@ -100,7 +95,7 @@ const Home = ()=> {
     await deleteDoc(playerDoc);
     setplayerList(remainingPlayers);
     if (remainingPlayers.length == 0) {
-     await setLastNumberDB(0)
+      await setLastNumberDB(0);
     }
     setName(playerToEdit[0].name);
     setTickets(playerToEdit[0].tickets.length);
@@ -111,10 +106,9 @@ const Home = ()=> {
       const { id } = player;
       const playerDoc = doc(db, "players", id);
       deleteDoc(playerDoc);
-      setplayerList([])
-      return setLastNumberDB(0)
+      setplayerList([]);
+      return setLastNumberDB(0);
     });
-    
   };
 
   const deletePlayer = async (id) => {
@@ -123,21 +117,16 @@ const Home = ()=> {
     await deleteDoc(playerDoc);
     setplayerList(remainingPlayers);
     if (remainingPlayers.length == 0) {
-      await setLastNumberDB(0)
+      await setLastNumberDB(0);
     }
   };
-
-
-
 
   return (
     <main>
       <div className="nav">
-      <img src={logo} alt="" className="logo" />
-   
-      <Navbar></Navbar>
-      
+        <img src={logo} alt="" className="logo" />
 
+        <Navbar></Navbar>
       </div>
       <h1 className="title">MTT Fredags Lotteri</h1>
 
@@ -157,7 +146,7 @@ const Home = ()=> {
                 <label className="labels nameLabel">Navn:</label>
                 <input
                   type="text"
-                  ref = {nameRef}
+                  ref={nameRef}
                   className="newName name"
                   value={name}
                   required
@@ -166,13 +155,14 @@ const Home = ()=> {
                   }}
                 />
               </div>
+              <PictureModal />
               <div>
                 <label className="labels">Antall billetter:</label>
                 <input
                   value={tickets}
                   className="newName newTickets"
                   required
-                  ref = {prizeRef}
+                  ref={prizeRef}
                   onChange={(e) => {
                     setTickets(Number(e.target.value));
                   }}
@@ -213,6 +203,6 @@ const Home = ()=> {
       </div>
     </main>
   );
-}
+};
 
 export default Home;

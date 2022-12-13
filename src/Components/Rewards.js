@@ -3,26 +3,23 @@ import { useState } from "react";
 import { getStorage, ref, getDownloadURL } from "firebase/storage";
 import { useEffect } from "react";
 
-function Rewards({updateState,updateStateFunc}) {
+function Rewards({ updateState, updateStateFunc }) {
   const [currentPrize, setCurrentPrize] = useState("");
   const storage = getStorage();
-    
+
   const getPicFromCloud = async () => {
-      const data = getDownloadURL(ref(storage, "current-pic")).then((url) => {
-        setCurrentPrize(url);
-        updateStateFunc(!updateState)
-      });    
+    const data = getDownloadURL(ref(storage, "current-pic")).then((url) => {
+      setCurrentPrize(url);
+      updateStateFunc(!updateState);
+    });
   };
-  
+
   useEffect(() => {
     getPicFromCloud();
-    console.log(`get pic sent`);
   }, []);
-
 
   return (
     <div className="pic-container">
-      
       <img src={`${currentPrize}`} className="current-prizes-pic" />
     </div>
   );

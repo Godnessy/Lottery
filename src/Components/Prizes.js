@@ -15,6 +15,7 @@ import {
 } from "firebase/firestore";
 import { getStorage, ref, uploadBytes } from "firebase/storage";
 import { FaEdit, FaTrash } from "react-icons/fa";
+import PictureModal from "./PictureModal";
 
 const Prizes = () => {
   const [prizeList, setPrizeList] = useState([]);
@@ -44,7 +45,7 @@ const Prizes = () => {
 
   useEffect(() => {
     getPrizes();
-  }, [updatePrizeList,prizePicState]);
+  }, [updatePrizeList, prizePicState]);
 
   const addNewPrize = async (e) => {
     e.preventDefault();
@@ -85,10 +86,8 @@ const Prizes = () => {
   const uploadPicToCloud = async (e) => {
     e.preventDefault();
     const NewPic = await uploadBytes(storageRef, e.target.files[0]);
-    setPrizePicState(!prizePicState)
+    setPrizePicState(!prizePicState);
   };
-  
-
 
   return (
     <div className="prize">
