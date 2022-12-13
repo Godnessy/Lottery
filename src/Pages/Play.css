@@ -121,10 +121,12 @@ body {
 .game-container {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr 1fr;
+  grid-template-rows: 0.7fr 1fr;
   grid-template-areas:
     "number play-button"
     "winner winner";
+  max-width: 100%;
+  width: 100%;
 }
 .winnerAlert {
   display: flex;
@@ -132,10 +134,13 @@ body {
   justify-content: center;
   grid-area: winner;
   height: 50%;
-  margin-top: 5%;
+
+  /* margin-top: 5%; */
   font-size: 1.7em;
   position: relative;
   bottom: 50%;
+  width: 90%;
+  left: 10%;
 }
 
 .game-button {
@@ -143,6 +148,7 @@ body {
   display: flex;
   justify-content: center;
   height: 50%;
+  z-index: 1;
 }
 
 .game-number {
@@ -153,6 +159,10 @@ body {
   height: 50%;
 }
 .winner-el {
+  background: linear-gradient(to right, #f32170, #ff6b08, #cf23cf, #eedd44);
+
+  -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text;
   font-size: 1.3em;
   margin: 0;
   text-decoration: underline;
