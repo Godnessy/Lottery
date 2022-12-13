@@ -24,6 +24,7 @@ const Home = () => {
   const [tickets, setTickets] = useState("");
   const [playerList, setplayerList] = useState([]);
   const [updateList, setUpdateList] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   const namesCollectionRef = collection(db, "players");
   const nameRef = useRef("");
   const prizeRef = useRef("");
@@ -125,7 +126,7 @@ const Home = () => {
   return (
     <main>
       <div className="arrow-div">
-        <h2>Nå kan du trykke på bilden</h2>
+        <h2>Nå kan du trykke på bildet</h2>
         <img src={arrow} alt="arrow" className="arrow" />
       </div>
       <div className="nav">
@@ -160,7 +161,19 @@ const Home = () => {
                   }}
                 />
               </div>
-              {/* <PictureModal /> */}
+              {showModal && (
+                <div>
+                  <button
+                    className="closeModal"
+                    onClick={() => {
+                      setShowModal(false);
+                    }}
+                  >
+                    X
+                  </button>
+                  <PictureModal />
+                </div>
+              )}
               <div>
                 <label className="labels">Antall billetter:</label>
                 <input
@@ -204,7 +217,7 @@ const Home = () => {
         </div>
 
         <div className="prize-container">
-          <Prizes></Prizes>
+          <Prizes showModal={showModal} setShowModal={setShowModal}></Prizes>
         </div>
       </div>
     </main>

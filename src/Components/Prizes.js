@@ -15,9 +15,8 @@ import {
 } from "firebase/firestore";
 import { getStorage, ref, uploadBytes } from "firebase/storage";
 import { FaEdit, FaTrash } from "react-icons/fa";
-import PictureModal from "./PictureModal";
 
-const Prizes = () => {
+const Prizes = ({ showModal, setShowModal }) => {
   const [prizeList, setPrizeList] = useState([]);
   const [newPrizeNumber, setNewPrizeNumber] = useState("");
   const [newPrizeName, setNewPrizeName] = useState("");
@@ -95,7 +94,12 @@ const Prizes = () => {
         Velg bilde:
         <input type="file" onChange={uploadPicToCloud} />
       </form>
-      <Rewards updateState={prizePicState} updateStateFunc={setPrizePicState} />
+      <Rewards
+        updateState={prizePicState}
+        updateStateFunc={setPrizePicState}
+        setShowModal={setShowModal}
+        showModal={showModal}
+      />
       <div className="prize-list-input">
         <form
           className="form prize-form"

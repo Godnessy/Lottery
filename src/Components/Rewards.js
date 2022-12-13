@@ -3,7 +3,7 @@ import { useState } from "react";
 import { getStorage, ref, getDownloadURL } from "firebase/storage";
 import { useEffect } from "react";
 
-function Rewards({ updateState, updateStateFunc }) {
+function Rewards({ updateState, updateStateFunc, setShowModal, ShowModal }) {
   const [currentPrize, setCurrentPrize] = useState("");
   const storage = getStorage();
 
@@ -20,7 +20,13 @@ function Rewards({ updateState, updateStateFunc }) {
 
   return (
     <div className="pic-container">
-      <img src={`${currentPrize}`} className="current-prizes-pic" />
+      <img
+        src={`${currentPrize}`}
+        className="current-prizes-pic"
+        onClick={() => {
+          setShowModal(true);
+        }}
+      />
     </div>
   );
 }
