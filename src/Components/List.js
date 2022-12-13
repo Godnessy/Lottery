@@ -1,7 +1,12 @@
-import React from "react";
+import { React, useState } from "react";
 import { FaEdit, FaTrash } from "react-icons/fa";
 
-const List = ({ playerList, editPlayer, deletePlayer }) => {
+const List = ({
+  playerList,
+  editPlayer = undefined,
+  deletePlayer = undefined,
+  isPlaying = true,
+}) => {
   return (
     <div className="list-items">
       <table className="players-list-table">
@@ -10,7 +15,7 @@ const List = ({ playerList, editPlayer, deletePlayer }) => {
             <p className="player-list-name">Navn</p>{" "}
           </th>
           <th className="player-list-headers">Billet Nummere</th>
-          <th className="player-list-headers">Options</th>
+          {isPlaying && <th className="player-list-headers">Rediger/Slett</th>}
         </tr>
         {playerList.length > 0 &&
           playerList.map((player) => {
@@ -19,23 +24,27 @@ const List = ({ playerList, editPlayer, deletePlayer }) => {
               <>
                 {" "}
                 <tr key={id}>
-                  <td>{name}</td>
-                  <td>{`${firstTicket} - ${lastTicket}`}</td>
+                  <td className={isPlaying && "play-list-td"}>{name}</td>
+                  <td
+                    className={isPlaying && "play-list-td"}
+                  >{`${firstTicket} - ${lastTicket}`}</td>
 
-                  <td>
-                    <FaEdit
-                      className="edit"
-                      onClick={() => {
-                        editPlayer(id);
-                      }}
-                    />
-                    <FaTrash
-                      className="delete"
-                      onClick={() => {
-                        deletePlayer(id);
-                      }}
-                    />
-                  </td>
+                  {isPlaying && (
+                    <td>
+                      <FaEdit
+                        className="edit"
+                        onClick={() => {
+                          editPlayer(id);
+                        }}
+                      />
+                      <FaTrash
+                        className="delete"
+                        onClick={() => {
+                          deletePlayer(id);
+                        }}
+                      />
+                    </td>
+                  )}
                 </tr>
               </>
             );

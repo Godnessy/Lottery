@@ -1,12 +1,12 @@
 import React from "react";
 import { useState, useEffect, useRef } from "react";
 import Navbar from "../Components/Navbar";
-import { GiCheckMark } from "react-icons/gi";
 import "./Play.css";
 import logo from "../images/mtt_logo.png";
 import { db } from "../firebase-config";
 import { collection, getDocs, orderBy, query } from "firebase/firestore";
 import Rewards from "../Components/Rewards";
+import List from "../Components/List";
 
 const Play = () => {
   const [playerList, setplayerList] = useState([]);
@@ -162,16 +162,7 @@ const Play = () => {
       <h1 className="title">MTT Fredags Lotteri</h1>
       <div className="container">
         <div className=" play-list">
-          {playerList.length > 0 &&
-            playerList.map((player) => {
-              const { firstTicket, lastTicket, name, id } = player;
-              return (
-                <div key={id} className="play-list-item">
-                  <p className="names">{`${name}`}</p>
-                  <p className="numbers">{`${firstTicket} - ${lastTicket}`}</p>
-                </div>
-              );
-            })}
+          <List playerList={playerList} isPlaying={false} />
         </div>
         <div className="game-container">
           <div className="game-number">
