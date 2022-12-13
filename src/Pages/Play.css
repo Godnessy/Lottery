@@ -104,23 +104,11 @@ body {
   background-color: red;
   border-radius: 10%;
 }
-.arrow-div {
-  position: absolute;
-  left: 85%;
-  top: 25%;
-}
-.arrow {
-  width: 50%;
-}
 
 @media screen and (max-width: 1540px) {
   .prize-item h3 {
     font-size: 1.2em;
   }
-}
-
-.active {
-  color: red;
 }
 
 .prizeNumber {

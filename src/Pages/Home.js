@@ -202,10 +202,6 @@ const Home = () => {
           </form>
 
           <div className="list">
-            <div className="titles-container">
-              <h2 className="list-name">Navn</h2>
-              <h2 className="list-numbers">Billet Nummere</h2>
-            </div>
             <div className="list-items-container">
               <List
                 playerList={playerList}
