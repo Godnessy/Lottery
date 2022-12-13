@@ -17,6 +17,7 @@ import List from "../Components/List";
 import Prizes from "../Components/Prizes";
 import Navbar from "../Components/Navbar";
 import PictureModal from "../Components/PictureModal";
+import arrow from "../images/arrow.png";
 
 const Home = () => {
   const [name, setName] = useState("");
@@ -123,6 +124,10 @@ const Home = () => {
 
   return (
     <main>
+      <div className="arrow-div">
+        <h2>Nå kan du trykke på bilden</h2>
+        <img src={arrow} alt="arrow" className="arrow" />
+      </div>
       <div className="nav">
         <img src={logo} alt="" className="logo" />
 
@@ -155,7 +160,7 @@ const Home = () => {
                   }}
                 />
               </div>
-              <PictureModal />
+              {/* <PictureModal /> */}
               <div>
                 <label className="labels">Antall billetter:</label>
                 <input
@@ -197,6 +202,7 @@ const Home = () => {
             </div>
           </div>
         </div>
+
         <div className="prize-container">
           <Prizes></Prizes>
         </div>
