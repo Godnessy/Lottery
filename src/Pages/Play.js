@@ -105,7 +105,7 @@ const Play = () => {
     const winnerLine = `🥳🥳${winnerName} vinner premie nummer ${prizeNumber}: ${prizeName} 🥳🥳`;
     const winnerTimeOut = setTimeout(() => {
       setWinnerBanner(winnerLine);
-      prizeWinnerEle[0].textContent = `${winningNumber}:${winnerName}🥳`;
+      prizeWinnerEle[0].textContent = `${winningNumber}:${winnerName}`;
     }, 2500);
   }
 
@@ -198,27 +198,34 @@ const Play = () => {
             <Rewards />
           </div>
           <div className="inside-prize-list">
-            {prizeList.length > 0 &&
-              prizeList.map((prize) => {
-                const { prizeName, number, id } = prize;
-                return (
-                  <div className="individual-prize-container" key={id}>
-                    <div className={`prize-item ${id}`}>
-                      <h3 className={`prizeNumber ${id}`}>{number} : </h3>
-                      <h3 className={`prizeName ${id}`}>{prizeName}</h3>
-                    </div>
-                    <p
-                      className={`winner-${id} winner-el`}
-                      ref={addWinnersIdToRef}
-                    ></p>
-                    <hr
-                      style={{
-                        width: 100,
-                      }}
-                    />
-                  </div>
-                );
-              })}
+            <h2>Premie Liste:</h2>
+            <table>
+              <tr>
+                <th>#</th>
+                <th>Premie</th>
+              </tr>
+              {prizeList.length > 0 &&
+                prizeList.map((prize) => {
+                  const { prizeName, number, id } = prize;
+                  return (
+                    <>
+                      {" "}
+                      <tr key={id}>
+                        <td>{number}</td>
+                        <td>{prizeName}</td>
+                      </tr>
+                      <tr>
+                        <td colspan="2">
+                          <p
+                            className={`winner-${id} winner-el`}
+                            ref={addWinnersIdToRef}
+                          ></p>
+                        </td>
+                      </tr>
+                    </>
+                  );
+                })}
+            </table>
           </div>
         </div>
       </div>

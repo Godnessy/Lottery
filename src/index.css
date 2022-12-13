@@ -1,20 +1,3 @@
-/* Remove underline and bold from first div (skriv navn) and make it straight against Navn underneath it
-add a space between this line and the navn.
-
-Make list as big as main-form
-make navn in list same line as navn in registration form
-move the billet nummer to the left and have the same margin between this and navn as navn has to the left edge.
-
-picture frame enlarge to fit the prize form
-
-move prize inputs to be right under the P 
-make the gap a bit bigger between prize number input and prize name, 2px
-make the gap between button and prize name input twice as big.
-
-Give the title a bit more space to the bottom
-and move it to the center
-*/
-
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
@@ -291,6 +274,7 @@ li a:hover {
 }
 
 .list-items-container {
+  max-width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -404,7 +388,7 @@ li a:hover {
 
 /* Prizes table */
 table {
-  dth: 100%;
+  width: 100%;
   border-collapse: collapse;
   background-color: #f2f2f2;
 }

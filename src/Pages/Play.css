@@ -165,7 +165,7 @@ body {
   height: 50%;
 }
 .winner-el {
-  font-size: 1.5em;
+  font-size: 1.3em;
   margin: 0;
   text-decoration: underline;
 }
@@ -192,7 +192,7 @@ body {
 .start-game {
   position: relative;
   top: 3em;
-  height: 50%;
+  height: 200px;
   width: 40%;
   font-size: 3em;
   background-color: #48abe0;
