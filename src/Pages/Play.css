@@ -193,8 +193,8 @@ body {
 .start-game {
   position: relative;
   top: 3em;
-  height: 200px;
-  width: 40%;
+  height: 150px;
+  width: 150px;
   font-size: 3em;
   background-color: #48abe0;
   color: white;
