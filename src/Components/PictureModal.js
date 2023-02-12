@@ -5,7 +5,7 @@ function PictureModal() {
   const [pic, setPic] = useState();
   const storage = getStorage();
   const getPicFromCloud = async () => {
-    const data = getDownloadURL(ref(storage, "current-pic")).then((url) => {
+    await getDownloadURL(ref(storage, "current-pic")).then((url) => {
       setPic(url);
     });
   };
@@ -15,7 +15,7 @@ function PictureModal() {
 
   return (
     <div className="modal">
-      <img src={pic && pic} className="modal-pic" />
+      <img src={pic && pic} alt="big prize pic" className="modal-pic" />
     </div>
   );
 }

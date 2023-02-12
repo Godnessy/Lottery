@@ -125,10 +125,6 @@ const Home = () => {
 
   return (
     <main>
-      <div className="arrow-div">
-        <h2>Nå kan du trykke på bildet</h2>
-        <img src={arrow} alt="arrow" className="arrow" />
-      </div>
       <div className="nav">
         <img src={logo} alt="" className="logo" />
 

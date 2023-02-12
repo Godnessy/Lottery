@@ -136,7 +136,7 @@ body {
   align-items: center;
   justify-content: center;
   grid-area: winner;
-  height: 50%;
+  height: 450px;
 
   /* margin-top: 5%; */
   font-size: 1.7em;

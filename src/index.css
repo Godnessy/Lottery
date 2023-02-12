@@ -338,9 +338,13 @@ li a:hover {
 
 .edit {
   color: lightgreen;
+  margin-right: 15%;
+  margin-left: 10%;
+  cursor: pointer;
 }
 .delete {
   color: red;
+  cursor: pointer;
 }
 
 .edit-btn,
@@ -436,14 +440,14 @@ tr:nth-child(even) {
 
 .arrow-div {
   position: absolute;
-  left: 81%;
-  top: 20%;
+  left: 87%;
+  top: 11%;
 }
 .arrow {
   width: 50%;
 }
 
-@media screen and (max-width: 2150px) {
+@media screen and (max-width: 1990px) {
   .names {
     font-size: 1.5em;
   }
@@ -454,7 +458,14 @@ tr:nth-child(even) {
   }
   .arrow-div {
     position: absolute;
-    left: 85%;
+    left: 95%;
+    top: 20%;
+  }
+}
+@media screen and (max-width: 1970px) {
+  .arrow-div {
+    position: absolute;
+    left: 80%;
     top: 19%;
   }
 }
@@ -572,4 +583,36 @@ tr:nth-child(even) {
   .title {
     margin-right: 1rem;
   }
+}
+
+.players-list-table {
+  border-collapse: collapse;
+  font-family: Tahoma, Geneva, sans-serif;
+}
+
+.play-list-td {
+  padding: 15px;
+}
+
+.players-list-table thead th {
+  background-color: #add8e6;
+  color: #ffffff;
+  font-weight: bold;
+  font-size: 1.2em;
+  border: 1px solid #54585d;
+  border-right: none;
+  border-left: none;
+}
+
+.players-list-table tbody td {
+  color: #636363;
+  border: 1px solid #dddfe1;
+}
+
+.players-list-table tbody tr {
+  background-color: #f9fafb;
+}
+
+.players-list-table tbody tr:nth-child(odd) {
+  background-color: #ffffff;
 }
