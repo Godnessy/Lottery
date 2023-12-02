@@ -3,6 +3,7 @@ import { useState, useEffect, useRef } from "react";
 import Navbar from "../Components/Navbar";
 import "./Play.css";
 import logo from "../images/mtt_logo.png";
+import santa_hat from "../images/santa-hat.png";
 import { db } from "../firebase-config";
 import { collection, getDocs, orderBy, query } from "firebase/firestore";
 import Rewards from "../Components/Rewards";
@@ -19,6 +20,9 @@ const Play = () => {
   const lotteryRandomNumber = document.querySelector(".winning-number");
   const prizeWinnerRef = useRef([]);
   prizeWinnerRef.current = [];
+  const isFirefox = navigator.userAgent.toLowerCase().indexOf("firefox") > -1;
+
+  const leftPosition = isFirefox ? 180 : 190;
 
   const [winningNumbers, setwinningNumbers] = useState([]);
 
@@ -159,9 +163,10 @@ const Play = () => {
         <img src={logo} alt="" className="logo" />
         <Navbar></Navbar>
       </div>
-      <h1 className="title">MTT Fredags Lotteri</h1>
+      <h1 className="title">God Jul til alle dere i MTT</h1>
       <div className="container">
         <div className=" play-list">
+          <img className="santa-hat" src={santa_hat} alt="Santa Hat" />
           <List playerList={playerList} isPlaying={false} />
         </div>
         <div className="game-container">
@@ -186,6 +191,12 @@ const Play = () => {
 
         <div className="play-prize-list">
           <div className="rewards">
+            <img
+              className="santa-hat-prize"
+              style={{ left: `${leftPosition}px` }}
+              src={santa_hat}
+              alt="Santa Hat pic"
+            />
             <Rewards />
           </div>
           <div className="inside-prize-list">

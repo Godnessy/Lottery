@@ -6,10 +6,51 @@ body {
   display: grid;
   grid-template-columns: 1.5fr 3fr 1fr;
 }
+
+@keyframes rainbow {
+  0% {
+    color: #ff8a00;
+  }
+  20% {
+    color: #e52e71;
+  }
+  40% {
+    color: #3498db;
+  }
+  60% {
+    color: #2ecc71;
+  }
+  80% {
+    color: #e74c3c;
+  }
+  100% {
+    color: #ff8a00;
+  }
+}
+
 .title {
   position: relative;
   left: 15%;
+  background-image: linear-gradient(
+    90deg,
+    #ff8a00,
+    #e52e71,
+    #3498db,
+    #2ecc71,
+    #e74c3c
+  );
+  -webkit-background-clip: text;
+  color: transparent;
+  text-decoration: underline;
+  animation: rainbow 5s infinite; /* Adjust the duration as needed */
 }
+
+.title::before,
+.title::after {
+  content: "🎉";
+  color: #333; /* You can set the color of the emoji here */
+}
+
 .play-list {
   display: flex;
   flex-direction: column;
@@ -77,6 +118,22 @@ body {
   font-size: 1.4em;
   margin-top: 5px;
   margin-bottom: 10px;
+}
+
+.santa-hat {
+  top: 0;
+  right: 0;
+  transform: translate(-50%, -50%) rotate(-20deg);
+  width: 100px;
+  height: auto;
+}
+
+.santa-hat-prize {
+  position: absolute;
+  top: 0;
+  transform: translate(-50%, -50%) rotate(20deg) scaleX(-1);
+  width: 100px;
+  height: auto;
 }
 
 .modal {
