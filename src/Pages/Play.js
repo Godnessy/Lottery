@@ -163,7 +163,7 @@ const Play = () => {
         <img src={logo} alt="" className="logo" />
         <Navbar></Navbar>
       </div>
-      <h1 className="title">God Jul til alle dere i MTT</h1>
+      <h1 className="title">Ønsker dere alle en God Jul!</h1>
       <div className="container">
         <div className=" play-list">
           <img className="santa-hat" src={santa_hat} alt="Santa Hat" />

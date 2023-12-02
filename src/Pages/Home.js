@@ -130,7 +130,7 @@ const Home = () => {
 
         <Navbar></Navbar>
       </div>
-      <h1 className="title-regular">MTT Fredags Lotteri</h1>
+      <h1 className="frontpage-title">MTT Fredags Lotteri</h1>
 
       <div className="setup-container">
         <div className="setup-box">

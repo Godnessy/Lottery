@@ -28,6 +28,13 @@ body {
   }
 }
 
+.frontpage-title {
+  position: relative;
+  left: 35%;
+  font-size: 50px;
+  text-decoration: underline;
+}
+
 .title {
   position: relative;
   left: 15%;
