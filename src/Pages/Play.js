@@ -22,7 +22,7 @@ const Play = () => {
   prizeWinnerRef.current = [];
   const isFirefox = navigator.userAgent.toLowerCase().indexOf("firefox") > -1;
 
-  const leftPosition = isFirefox ? 180 : 190;
+  const leftPosition = isFirefox ? 180 : 180;
 
   const [winningNumbers, setwinningNumbers] = useState([]);
 
