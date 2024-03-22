@@ -20,9 +20,6 @@ const Play = () => {
   const lotteryRandomNumber = document.querySelector(".winning-number");
   const prizeWinnerRef = useRef([]);
   prizeWinnerRef.current = [];
-  const isFirefox = navigator.userAgent.toLowerCase().indexOf("firefox") > -1;
-
-  const leftPosition = isFirefox ? 180 : 180;
 
   const [winningNumbers, setwinningNumbers] = useState([]);
 
@@ -163,10 +160,12 @@ const Play = () => {
         <img src={logo} alt="" className="logo" />
         <Navbar></Navbar>
       </div>
-      <h1 className="title">Ønsker dere alle en God Jul!</h1>
+      <h1 className="title">MTT Fredags Lotteri</h1>
       <div className="container">
         <div className=" play-list">
-          <img className="santa-hat" src={santa_hat} alt="Santa Hat" />
+          {/* 
+           <img className="santa-hat" src={santa_hat} alt="Santa Hat" />
+          */}
           <List playerList={playerList} isPlaying={false} />
         </div>
         <div className="game-container">
@@ -191,12 +190,13 @@ const Play = () => {
 
         <div className="play-prize-list">
           <div className="rewards">
-            <img
+            {/*<img
               className="santa-hat-prize"
               style={{ left: `${leftPosition}px` }}
               src={santa_hat}
               alt="Santa Hat pic"
             />
+            */}
             <Rewards />
           </div>
           <div className="inside-prize-list">
